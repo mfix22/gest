@@ -2,10 +2,19 @@ const fs = require('fs')
 const axios = require('axios')
 const chalk = require('chalk')
 const { graphql } = require('graphql')
-const { graphql: config } = require('../package.json')
+const { graphql: config } = require(`${process.cwd()}/package.json`)
 const { baseURL, timeout } = config
 
 const encode = query => `"${query.replace(/\s/ig, '').replace(/"/ig, `\\"`).toString()}"`
+
+const pullHeaders = (args) =>
+  args.reduce((accum, next, i, a) => {
+    if (i % 2 === 0 && a[i].toLowerCase() === '-h') {
+      const [key, value] = a[i + 1].split('=')
+      accum[key] = value
+    }
+    return accum
+  }, {})
 
 function sendQuery (headers) {
   return function (query) {
@@ -49,5 +58,6 @@ module.exports = {
   encode,
   sendQuery,
   readFile,
-  checkPath
+  checkPath,
+  pullHeaders
 }

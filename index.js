@@ -1,20 +1,15 @@
 #! /usr/bin/env node
 const readline = require('readline')
 
-const { encode, sendQuery, readFile, checkPath } = require('./src/util')
+const { encode, sendQuery, readFile, checkPath, pullHeaders } = require('./src/util')
 
 const [node, file, ...args] = process.argv
 
-if (args.length) {
-  if (args.length % 2 === 0) throw new Error('Invalid Arguments')
+let headers
+
+if (args.length && args.length % 2 === 1) {
   const queryOrFile = args.pop()
-  const headers = args.reduce((accum, next, i, a) => {
-    if (i % 2 === 0 && a[i] === '-h') {
-      const [key, value] = a[i + 1].split('=')
-      accum[key] = value
-    }
-    return accum
-  }, {})
+  headers = pullHeaders(args)
 
   checkPath(`${__dirname}/${queryOrFile}`)
     .then(readFile)
@@ -23,6 +18,7 @@ if (args.length) {
     .then(console.log)
     .catch(console.log)
 } else  {
+  if (args.length) headers = pullHeaders(args)
   const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout
@@ -30,7 +26,9 @@ if (args.length) {
 
 
   rl.question('Query: ', (query) => {
-    sendQuery(query)
+    sendQuery(headers)(query)
+      .then(console.log)
+      .catch(console.log)
     rl.close()
   })
 }
