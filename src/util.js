@@ -1,4 +1,5 @@
 const fs = require('fs')
+const readline = require('readline')
 const axios = require('axios')
 const chalk = require('chalk')
 const { graphql } = require('graphql')
@@ -6,6 +7,27 @@ const { graphql: config } = require(`${process.cwd()}/package.json`)
 const { baseURL, timeout } = config
 
 const encode = query => `"${query.replace(/\s/ig, '').replace(/"/ig, `\\"`).toString()}"`
+
+function REPL (args) {
+  const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+  })
+
+  rl.on('SIGINT', () => rl.close())
+  rl.on('SIGTSTP', () => rl.close())
+
+  function prompt (args) {
+    rl.question('Query: ', (query) => {
+      sendQuery(args)(query)
+        .then(console.log)
+        .catch(console.log)
+      prompt(args)
+    })
+  }
+
+  prompt(args)
+}
 
 const pullHeaders = (args) =>
   args.reduce((accum, next, i, a) => {
@@ -59,5 +81,6 @@ module.exports = {
   sendQuery,
   readFile,
   checkPath,
-  pullHeaders
+  pullHeaders,
+  REPL
 }
