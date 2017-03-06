@@ -1,0 +1,13 @@
+{
+  "env": {
+    "node": true,
+  },
+  "globals": {
+    "assert": false
+  },
+  "extends": [
+    "standard"
+  ],
+  "rules": {
+  }
+}

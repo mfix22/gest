@@ -9,7 +9,12 @@
     "graphql": "^0.9.1",
     "readline": "latest"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "eslint": "^3.17.0",
+    "eslint-config-standard": "^7.0.0",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-standard": "^2.1.1"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
