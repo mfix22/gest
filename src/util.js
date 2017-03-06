@@ -52,7 +52,7 @@ function sendQuery (args) {
                      .then(colorResponse)
                      .catch(console.log)
     }
-    const schema = require(`${process.cwd()}/schema`)
+    const schema = require(config.schema || `${process.cwd()}/schema`)
     return graphql(schema, query)
             .then(colorResponse)
             .catch(console.log)
