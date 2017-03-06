@@ -7,26 +7,27 @@ const { baseURL, timeout } = config
 
 const encode = query => `"${query.replace(/\s/ig, '').replace(/"/ig, `\\"`).toString()}"`
 
-function sendQuery(query) {
-  console.log(`${query}\n`);
-  if (baseURL) {
-    const instance = axios.create({
-      baseURL,
-      timeout: config.timeout || 5000,
-      headers: {
-        authorization: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjoiVHJvVWF4c05yQSIsImlhdCI6MTQ4ODUxNjQzOSwiZXhwIjoxNDkxMTA4NDM5fQ.kjRG_1rBfQ5QmkD0LFzLoLDNLMg3AQhmDQ7r-_wIYPs'
-      }
-    })
-    return instance.post('/', encode(query))
-                   .then(res => res.data)
-                   .then(colorResponse)
-                   .catch(console.log)
+function sendQuery (headers) {
+  return function (query) {
+    console.log(`${query}\n`);
+    if (baseURL) {
+      const instance = axios.create({
+        baseURL,
+        timeout: config.timeout || 5000,
+        headers
+      })
+      return instance.post('/', encode(query))
+                     .then(res => res.data)
+                     .then(colorResponse)
+                     .catch(console.log)
+    }
+    const schema = require(`${process.cwd()}/schema`)
+    return graphql(schema, query)
+            .then(colorResponse)
+            .catch(console.log)
   }
-  const schema = require(`${process.cwd()}/schema`)
-  return graphql(schema, query)
-          .then(colorResponse)
-          .catch(console.log)
 }
+
 
 const colorResponse = (res) =>
   JSON.stringify(res, null, 2)
