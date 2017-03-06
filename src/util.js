@@ -1,9 +1,10 @@
 const fs = require('fs')
 const readline = require('readline')
+const path = require('path')
 const axios = require('axios')
 const chalk = require('chalk')
 const { graphql } = require('graphql')
-const { graphql: config } = require(`${process.cwd()}/package.json`)
+const { graphql: config } = require(path.join(process.cwd(), 'package.json'))
 const { baseURL } = config
 
 const encode = query => `"${query.replace(/\s/ig, '').replace(/"/ig, `\\"`).toString()}"`
@@ -52,7 +53,7 @@ function sendQuery (args) {
                      .then(colorResponse)
                      .catch(console.log)
     }
-    const schema = require(config.schema || `${process.cwd()}/schema`)
+    const schema = require(path.join(process.cwd(), config.schema || 'package.json'))
     return graphql(schema, query)
             .then(colorResponse)
             .catch(console.log)
