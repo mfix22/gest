@@ -12,6 +12,8 @@ if (args.length) {
     .then(readFile)
     .catch(() => queryOrFile)
     .then(sendQuery)
+    .then(console.log)
+    .catch(console.log)
 } else  {
   const rl = readline.createInterface({
     input: process.stdin,
