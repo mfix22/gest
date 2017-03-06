@@ -1,0 +1,2 @@
+# graphicli
+GraphQL testing CLI
