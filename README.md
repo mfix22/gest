@@ -25,7 +25,7 @@ $ gest test.query
 }
 ```
 
-#### REPL
+### REPL
 ```bash
 $ gest
 
@@ -38,7 +38,7 @@ Query: { test }
 }
 ```
 
-#### HTTP
+### HTTP
 If you specify a `baseURL` in your [`config`](#config), gest will send an [`axios`](https://github.com/mzabriskie/axios) `POST` request with your query in the body. Your `baseURL` must be a fully qualified URL.
 
 You can specifiy HTTP headers by using `-h key=value` flags.
