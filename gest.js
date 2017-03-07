@@ -1,6 +1,6 @@
 #! /usr/bin/env node
 const args = require('args')
-const { sendQuery, readFile, checkPath, REPL } = require('./src/util')
+const { sendQuery, readFile, checkPath, REPL } = require('./src/api')
 
 args
   .option('header', 'HTTP request header')
