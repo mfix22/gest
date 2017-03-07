@@ -70,6 +70,7 @@ You can configure the `graphicli` runtime by adding a `graphql` key to your `pac
 ##### Pros
 - :+1:  No restarting your dev server when you update your server
 - :+1:  Testing your schema doesn't require a separate window (e.g. Graphiql)
+- :+1:  Helpful error messages
 
 ##### Cons
 - :-1:  No query autocompletion ([yet](https://github.com/mfix22/graphicli/issues/1))
