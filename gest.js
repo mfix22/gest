@@ -6,7 +6,7 @@ args
   .option('header', 'HTTP request header')
   .option('baseURL', 'Base URL for sending HTTP requests')
 
-const flags = args.parse(process.argv, {subColor: ['dim', 'blue']})
+const flags = args.parse(process.argv)
 
 if (args.sub && args.sub.length) {
   checkPath(`${__dirname}/${args.sub[0]}`)
