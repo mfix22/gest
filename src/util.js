@@ -44,7 +44,7 @@ const pullHeaders = ({ header }) => {
 function sendQuery (flags) {
   return function (query) {
     console.log(`${query}\n`)
-    if (config.baseURL) {
+    if (config && config.baseURL) {
       const instance = axios.create({
         baseURL: config.baseURL,
         timeout: config.timeout || 5000,
@@ -55,7 +55,7 @@ function sendQuery (flags) {
                      .then(colorResponse)
                      .catch(console.log)
     }
-    const schema = require(path.join(process.cwd(), config.schema || 'package.json'))
+    const schema = require(path.join(process.cwd(), (config && config.schema) || 'schema.js'))
     return graphql(schema, query)
             .then(colorResponse)
             .catch(console.log)

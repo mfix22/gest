@@ -2,7 +2,7 @@
   "name": "graphicli",
   "version": "0.4.2",
   "description": "GraphQL CLI",
-  "main": "index.js",
+  "main": "gest.js",
   "dependencies": {
     "args": "^2.3.0",
     "axios": "^0.15.3",
@@ -24,6 +24,6 @@
   "author": "Michael Fix <@mfix22>",
   "license": "ISC",
   "bin": {
-    "gest": "./index.js"
+    "gest": "./gest.js"
   }
 }

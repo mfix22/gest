@@ -8,7 +8,7 @@ $ npm install -g graphicli
 
 then send queries like:
 ```bash
-$ gest [options] <quotedQuery | pathToFileWithQuery>
+$ gest [options] [quotedQuery | pathToFileWithQuery]
 ```
 
 ##### Examples
