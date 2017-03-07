@@ -29,12 +29,12 @@ function REPL (args) {
   prompt(args)
 }
 
-const pullHeaders = ({ yheader }) => {
-  if (typeof yheader === 'string') {
-    const [key, value] = yheader
+const pullHeaders = ({ header }) => {
+  if (typeof header === 'string') {
+    const [key, value] = header
     return { [key]: value }
   }
-  return yheader.reduce((accum, next) => {
+  return header.reduce((accum, next) => {
     const [key, value] = next.split('=')
     accum[key] = value
     return accum

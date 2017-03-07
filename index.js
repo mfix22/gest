@@ -3,7 +3,7 @@ const args = require('args')
 const { sendQuery, readFile, checkPath, REPL } = require('./src/util')
 
 args
-  .option('header', 'HTTP request header') // TODO update this -> header
+  .option('header', 'HTTP request header')
   .option('baseURL', 'Base URL for sending HTTP requests')
 
 const flags = args.parse(process.argv)
