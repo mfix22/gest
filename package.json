@@ -21,5 +21,8 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Michael Fix <@mfix22>",
-  "license": "ISC"
+  "license": "ISC",
+  "bin": {
+    "gest": "node index.js"
+  }
 }
