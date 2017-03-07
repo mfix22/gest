@@ -12,9 +12,8 @@ if (args.length && args.length % 2 === 1) {
     .then(sendQuery(args))
     .then(console.log)
     .catch(console.log)
-
-  process.exit()
+    .then(() => process.exit())
+} else {
+  // REPL
+  REPL(args)
 }
-
-// REPL
-REPL(args)

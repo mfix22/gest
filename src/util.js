@@ -5,7 +5,6 @@ const axios = require('axios')
 const chalk = require('chalk')
 const { graphql } = require('graphql')
 const { graphql: config } = require(path.join(process.cwd(), 'package.json'))
-const { baseURL } = config
 
 const encode = query => `"${query.replace(/\s/ig, '').replace(/"/ig, `\\"`).toString()}"`
 
@@ -42,9 +41,9 @@ const pullHeaders = (args) =>
 function sendQuery (args) {
   return function (query) {
     console.log(`${query}\n`)
-    if (baseURL) {
+    if (config && config.baseURL) {
       const instance = axios.create({
-        baseURL,
+        baseURL: config.baseURL,
         timeout: config.timeout || 5000,
         headers: pullHeaders(args)
       })
@@ -53,7 +52,7 @@ function sendQuery (args) {
                      .then(colorResponse)
                      .catch(console.log)
     }
-    const schema = require(path.join(process.cwd(), config.schema || 'package.json'))
+    const schema = require(path.join(process.cwd(), (config && config.schema) || 'schema.js'))
     return graphql(schema, query)
             .then(colorResponse)
             .catch(console.log)
