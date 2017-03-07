@@ -1,20 +1,22 @@
 #! /usr/bin/env node
+const args = require('args')
 const { sendQuery, readFile, checkPath, REPL } = require('./src/util')
 
-const args = process.argv.slice(2)
+args
+  .option('header', 'HTTP request header') // TODO update this -> header
+  .option('baseURL', 'Base URL for sending HTTP requests')
 
-if (args.length && args.length % 2 === 1) {
-  const queryOrFile = args.pop()
+const flags = args.parse(process.argv)
 
-  checkPath(`${__dirname}/${queryOrFile}`)
+if (args.sub && args.sub.length) {
+  checkPath(`${__dirname}/${args.sub[0]}`)
     .then(readFile)
-    .catch(() => queryOrFile)
-    .then(sendQuery(args))
+    .catch(() => args.sub[0])
+    .then(sendQuery(flags))
     .then(console.log)
     .catch(console.log)
-
-  process.exit()
+    .then(() => process.exit())
+} else {
+  // REPL
+  REPL(flags)
 }
-
-// REPL
-REPL(args)

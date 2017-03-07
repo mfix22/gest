@@ -5,7 +5,6 @@ const axios = require('axios')
 const chalk = require('chalk')
 const { graphql } = require('graphql')
 const { graphql: config } = require(path.join(process.cwd(), 'package.json'))
-const { baseURL } = config
 
 const encode = query => `"${query.replace(/\s/ig, '').replace(/"/ig, `\\"`).toString()}"`
 
@@ -30,23 +29,26 @@ function REPL (args) {
   prompt(args)
 }
 
-const pullHeaders = (args) =>
-  args.reduce((accum, next, i, a) => {
-    if (i % 2 === 0 && a[i].toLowerCase() === '-h') {
-      const [key, value] = a[i + 1].split('=')
-      accum[key] = value
-    }
+const pullHeaders = ({ yheader }) => {
+  if (typeof yheader === 'string') {
+    const [key, value] = yheader
+    return { [key]: value }
+  }
+  return yheader.reduce((accum, next) => {
+    const [key, value] = next.split('=')
+    accum[key] = value
     return accum
   }, {})
+}
 
-function sendQuery (args) {
+function sendQuery (flags) {
   return function (query) {
     console.log(`${query}\n`)
-    if (baseURL) {
+    if (config.baseURL) {
       const instance = axios.create({
-        baseURL,
+        baseURL: config.baseURL,
         timeout: config.timeout || 5000,
-        headers: pullHeaders(args)
+        headers: pullHeaders(flags)
       })
       return instance.post('/', encode(query))
                      .then(res => res.data)
