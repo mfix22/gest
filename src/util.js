@@ -42,23 +42,29 @@ const pullHeaders = ({ header }) => {
   }, {})
 }
 
-const testURL = (url) => /(^|\s)((https?:\/\/)[\w-]+(\.[a-z-]+)+\.?(:\d+)?(\/\S*)?)/gi.test(url)
+const correctURL = (url) => {
+  if (/(https?:\/\/)[\w-]+(\.[a-z-]+)+\.?(:\d+)?(\/\S*)?/gi.test(url)) return url
+  if (/[\w-]+(\.[a-z-]+)+\.?(:\d+)?(\/\S*)?/gi.test(url)) return `https://${url}`
+  throw new Error('Your `baseURL` must be a valid URL.')
+}
 
 function sendQuery (flags) {
   return function (query) {
-    console.log(`${query}\n`)
     if (config && config.baseURL) {
-      if (!testURL(config.baseURL)) throw new Error('Your `baseUrl` must be a domain with "http(s)"')
-
       const instance = axios.create({
-        timeout: config.timeout || 5000,
+        timeout: config.timeout || 10000,
         headers: pullHeaders(flags)
       })
 
-      return instance.post(config.baseURL, encode(query))
+      const corrected = correctURL(config.baseURL)
+      console.log(`${query} -> ${corrected}`)
+
+      return instance.post(corrected, encode(query))
                      .then(res => res.data)
                      .then(colorResponse)
     }
+
+    console.log(query)
     const schema = require(path.join(process.cwd(), (config && config.schema) || 'schema.js'))
     return graphql(schema, query)
             .then(colorResponse)
@@ -66,7 +72,7 @@ function sendQuery (flags) {
 }
 
 const colorResponse = (res) =>
-  `${JSON.stringify(res, null, 2)
+  `\n${JSON.stringify(res, null, 2)
     .replace(/errors/i, chalk.red.bold('$&'))
     .replace(/data/i, chalk.green.bold('$&'))
     .replace(/\\"/ig, `"`)
