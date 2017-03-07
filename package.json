@@ -4,12 +4,13 @@
   "description": "GraphQL CLI",
   "main": "index.js",
   "dependencies": {
+    "args": "^2.3.0",
     "axios": "^0.15.3",
     "chalk": "^1.1.3",
     "fs": "latest",
     "graphql": "^0.9.1",
-    "readline": "latest",
-    "path": "latest"
+    "path": "latest",
+    "readline": "latest"
   },
   "devDependencies": {
     "eslint": "^3.17.0",
