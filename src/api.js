@@ -1,13 +1,11 @@
 const fs = require('fs')
 const readline = require('readline')
-const path = require('path')
 const axios = require('axios')
 const { graphql } = require('graphql')
-const { graphql: config } = require(path.join(process.cwd(), 'package.json'))
 
-const { pullHeaders, correctURL, colorResponse, encode } = require('./util')
+const { correctURL, colorResponse, encode, DEFAULT_CONFIG } = require('./util')
 
-function REPL (args) {
+function REPL (schema, options) {
   const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout
@@ -16,27 +14,29 @@ function REPL (args) {
   rl.on('SIGINT', () => rl.close())
   rl.on('SIGTSTP', () => rl.close())
 
-  function prompt (args) {
-    rl.question('Query: ', (query) => {
-      sendQuery(args)(query)
-        .then(console.log)
-        .catch(console.log)
-        .then(() => prompt(args))
+  function prompt () {
+    rl.question('Query: ', query => {
+      if (query.toLowerCase().trim() === 'quit') return rl.close()
+      return sendQuery(schema, options)(query)
+              .then(console.log)
+              .catch(console.log)
+              .then(() => prompt())
     })
   }
 
-  prompt(args)
+  prompt()
 }
 
-function sendQuery (flags) {
+function sendQuery (schema, config) {
+  const { baseURL, headers, timeout } = Object.assign(DEFAULT_CONFIG, config)
   return function (query) {
-    if (config && config.baseURL) {
+    if (baseURL) {
       const instance = axios.create({
-        timeout: config.timeout || 10000,
-        headers: pullHeaders(flags)
+        timeout,
+        headers
       })
 
-      const corrected = correctURL(config.baseURL)
+      const corrected = correctURL(baseURL)
       console.log(`${query} -> ${corrected}`)
 
       return instance.post(corrected, encode(query))
@@ -45,7 +45,6 @@ function sendQuery (flags) {
     }
 
     console.log(query)
-    const schema = require(path.join(process.cwd(), (config && config.schema) || 'schema.js'))
     return graphql(schema, query)
             .then(colorResponse)
   }
@@ -62,10 +61,8 @@ const checkPath = (path) =>
       err ? reject(err) : resolve(path)))
 
 module.exports = {
-  encode,
+  REPL,
   sendQuery,
   readFile,
-  checkPath,
-  pullHeaders,
-  REPL
+  checkPath
 }

@@ -1,18 +1,24 @@
 const chalk = require('chalk')
 
+exports.DEFAULT_CONFIG = { timeout: 10000, headers: {} }
+
 exports.encode = query => `"${query.replace(/\s/ig, '').replace(/"/ig, `\\"`).toString()}"`
 
 exports.pullHeaders = ({ header }) => {
-  if (!header) return {}
+  if (!header) return undefined
   if (typeof header === 'string') {
     const [key, value] = header
-    return { [key]: value }
+    return {
+      headers: { [key]: value }
+    }
   }
-  return header.reduce((accum, next) => {
-    const [key, value] = next.split('=')
-    accum[key] = value
-    return accum
-  }, {})
+  return {
+    headers: header.reduce((accum, next) => {
+      const [key, value] = next.split('=')
+      accum[key] = value
+      return accum
+    }, {})
+  }
 }
 
 exports.correctURL = (url) => {
