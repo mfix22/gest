@@ -8,16 +8,16 @@ $ npm install -g graphicli
 
 then send queries like:
 ```bash
-$ TK <quotedQuery | pathToFileWithQuery>
+$ gest <quotedQuery | pathToFileWithQuery>
 ```
 
 ##### Examples
 ```bash
-$ TK "{ test }"
+$ gest "{ test }"
 ```
 or
 ```bash
-$ TK test.query
+$ gest test.query
 
 # with `test.query` containing
 {
@@ -27,7 +27,7 @@ $ TK test.query
 
 #### REPL
 ```bash
-$ TK
+$ gest
 
 Query: { test }
 
@@ -39,12 +39,12 @@ Query: { test }
 ```
 
 #### HTTP
-If you specify a `baseURL` in your [`config`](#config), TK will send an [`axios`](https://github.com/mzabriskie/axios) `POST` request with your query in the body. Your `baseURL` must be a fully qualified URL.
+If you specify a `baseURL` in your [`config`](#config), gest will send an [`axios`](https://github.com/mzabriskie/axios) `POST` request with your query in the body. Your `baseURL` must be a fully qualified URL.
 
 You can specifiy HTTP headers by using `-h key=value` flags.
 ##### Example
 ```bash
-$ TK -h Authorization=e130294e -h Accept=application/json "{ test }"
+$ gest -h Authorization=e130294e -h Accept=application/json "{ test }"
 ```
 
 ## Convention
