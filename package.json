@@ -23,6 +23,6 @@
   "author": "Michael Fix <@mfix22>",
   "license": "ISC",
   "bin": {
-    "gest": "node index.js"
+    "gest": "./index.js"
   }
 }
