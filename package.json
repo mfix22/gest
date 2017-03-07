@@ -1,6 +1,6 @@
 {
   "name": "graphicli",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "description": "GraphQL CLI",
   "main": "index.js",
   "dependencies": {
