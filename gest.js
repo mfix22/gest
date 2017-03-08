@@ -10,38 +10,36 @@ args
 
 const flags = args.parse(process.argv)
 
-if (!flags.help && !flags.version) {
-  let config
-  let schema
-  try {
-    config = require(path.join(process.cwd(), 'package.json')).gest
-  } catch (e) {}
+try {
+  if (!flags.help && !flags.version) {
+    let config
+    try {
+      config = require(path.join(process.cwd(), 'package.json')).gest
+    } catch (e) {}
 
-  const options = Object.assign({ schema: 'schema.js' }, config, flagsToOptions(flags))
+    const options = Object.assign({ schema: 'schema.js' }, config, flagsToOptions(flags))
 
-  try {
-    schema = require(path.join(process.cwd(), options.schema))
-  } catch (e) {
-    switch (e.code) {
-      case 'MODULE_NOT_FOUND':
-        console.log('\nSchema not found. Trying running `gest` with your `schema.js` in the current working directory.\n')
-        break
-      default: console.log(e)
+    const schema = require(path.join(process.cwd(), options.schema))
+
+    if (args.sub && args.sub.length) {
+      checkPath(path.join(__dirname, args.sub[0]))
+      .then(readFile)
+      .catch(() => args.sub[0])
+      .then(sendQuery(schema, options))
+      .then(colorResponse)
+      .then(console.log)
+      .catch(console.log)
+      .then(() => process.exit())
+    } else {
+      // REPL
+      REPL(schema, options)
     }
-    process.exit()
   }
-
-  if (args.sub && args.sub.length) {
-    checkPath(path.join(__dirname, args.sub[0]))
-    .then(readFile)
-    .catch(() => args.sub[0])
-    .then(sendQuery(schema, options))
-    .then(colorResponse)
-    .then(console.log)
-    .catch(console.log)
-    .then(() => process.exit())
-  } else {
-    // REPL
-    REPL(schema, options)
+} catch (e) {
+  switch (e.code) {
+    case 'MODULE_NOT_FOUND':
+      console.log('\nSchema not found. Trying running `gest` with your `schema.js` in the current working directory.\n')
+      break
+    default: console.log(e)
   }
 }
