@@ -2,7 +2,7 @@
 const args = require('./args') // TODO
 const path = require('path')
 const { sendQuery, readFile, checkPath, REPL } = require('./src/api')
-const { pullHeaders, colorResponse } = require('./src/util')
+const { flagsToOptions, colorResponse } = require('./src/util')
 
 args
   .option('header', 'HTTP request header')
@@ -14,10 +14,13 @@ if (!flags.help && !flags.version) {
   let config
   let schema
   try {
-    config = require(path.join(process.cwd(), 'package.json'))
+    config = require(path.join(process.cwd(), 'package.json')).gest
   } catch (e) {}
+
+  const options = Object.assign({ schema: 'schema.js' }, config, flagsToOptions(flags))
+
   try {
-    schema = require(path.join(process.cwd(), (config && config.schema) || 'schema'))
+    schema = require(path.join(process.cwd(), options.schema))
   } catch (e) {
     switch (e.code) {
       case 'MODULE_NOT_FOUND':
@@ -27,8 +30,6 @@ if (!flags.help && !flags.version) {
     }
     process.exit()
   }
-
-  const options = Object.assign({}, config, pullHeaders(flags), { baseURL: flags.baseUrl })
 
   if (args.sub && args.sub.length) {
     checkPath(path.join(__dirname, args.sub[0]))

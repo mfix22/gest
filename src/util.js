@@ -4,7 +4,7 @@ exports.DEFAULT_CONFIG = { timeout: 10000, headers: {} }
 
 exports.encode = query => `"${query.replace(/\s/ig, '').replace(/"/ig, `\\"`).toString()}"`
 
-exports.pullHeaders = ({ header }) => {
+const pullHeaders = (header) => {
   if (!header) return undefined
   if (typeof header === 'string') {
     const [key, value] = header
@@ -20,6 +20,14 @@ exports.pullHeaders = ({ header }) => {
     }, {})
   }
 }
+
+// JSON.parse(JSON.stringify(obj)) removes undefined keys
+exports.flagsToOptions = ({baseUrl, schema, header}) =>
+  JSON.parse(JSON.stringify({
+    baseURL: Array.isArray(baseUrl) ? baseUrl[0] : baseUrl,
+    schema: Array.isArray(schema) ? schema[0] : schema,
+    headers: pullHeaders(header)
+  }))
 
 exports.correctURL = (url) => {
   if (/(https?:\/\/)[\w-]+(\.[a-z-]+)+\.?(:\d+)?(\/\S*)?/gi.test(url)) return url
