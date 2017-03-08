@@ -18,6 +18,7 @@ function REPL (schema, options) {
     rl.question('Query: ', query => {
       if (query.toLowerCase().trim() === 'quit') return rl.close()
       return sendQuery(schema, options)(query)
+              .then(colorResponse)
               .then(console.log)
               .catch(console.log)
               .then(() => prompt())
@@ -41,12 +42,10 @@ function sendQuery (schema, config) {
 
       return instance.post(corrected, encode(query))
                      .then(res => res.data)
-                     .then(colorResponse)
     }
 
     console.log(query)
     return graphql(schema, query)
-            .then(colorResponse)
   }
 }
 

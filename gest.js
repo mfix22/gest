@@ -3,7 +3,7 @@ const args = require('args')
 const path = require('path')
 const { graphql: config } = require(path.join(process.cwd(), 'package.json'))
 const { sendQuery, readFile, checkPath, REPL } = require('./src/api')
-const { pullHeaders } = require('./src/util')
+const { pullHeaders, colorResponse } = require('./src/util')
 
 const schema = require(path.join(process.cwd(), (config && config.schema) || 'schema.js'))
 
@@ -20,6 +20,7 @@ if (args.sub && args.sub.length) {
     .then(readFile)
     .catch(() => args.sub[0])
     .then(sendQuery(schema, options))
+    .then(colorResponse)
     .then(console.log)
     .catch(console.log)
     .then(() => process.exit())
