@@ -1,4 +1,4 @@
-# :chart_with_upwards_trend: graphicli
+# :busts_in_silhouette: graphicli
 #### A sensible GraphQL testing CLI.
 
 ## Usage
