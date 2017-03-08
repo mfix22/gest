@@ -16,7 +16,7 @@ const flags = args.parse(process.argv)
 const options = Object.assign({}, config, pullHeaders(flags), { baseURL: flags.baseUrl })
 
 if (args.sub && args.sub.length) {
-  checkPath(`${__dirname}/${args.sub[0]}`)
+  checkPath(path.join(__dirname, args.sub[0]))
     .then(readFile)
     .catch(() => args.sub[0])
     .then(sendQuery(schema, options))
