@@ -1,8 +1,11 @@
 {
   "name": "graphicli",
   "version": "0.4.2",
-  "description": "GraphQL CLI",
+  "description": "GraphQL testing CLI",
   "main": "gest.js",
+  "engines": {
+    "node": ">= 6.9.0"
+  },
   "dependencies": {
     "args": "^2.3.0",
     "axios": "^0.15.3",
@@ -22,8 +25,23 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Michael Fix <@mfix22>",
-  "license": "ISC",
+  "license": "MIT",
   "bin": {
     "gest": "./gest.js"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mfix22/graphicli.git"
+  },
+  "keywords": [
+    "cli",
+    "graphql",
+    "graphiql",
+    "gest",
+    "test"
+  ],
+  "bugs": {
+    "url": "https://github.com/mfix22/graphicli/issues"
+  },
+  "homepage": "https://github.com/mfix22/graphicli#readme"
 }
