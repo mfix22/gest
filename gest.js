@@ -29,7 +29,6 @@ try {
       .then(colorResponse)
       .then(console.log)
       .catch(console.log)
-      .then(() => process.exit())
     } else {
       // REPL
       REPL(schema, options)
