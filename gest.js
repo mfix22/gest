@@ -1,7 +1,6 @@
 #! /usr/bin/env node
 const args = require('./args') // TODO
 const path = require('path')
-const { graphql: config } = require(path.join(process.cwd(), 'package.json'))
 const { sendQuery, readFile, checkPath, REPL } = require('./src/api')
 const { pullHeaders, colorResponse } = require('./src/util')
 
@@ -12,11 +11,20 @@ args
 const flags = args.parse(process.argv)
 
 if (!flags.help && !flags.version) {
+  let config
   let schema
   try {
-    schema = require(path.join(process.cwd(), (config && config.schema) || 'schema.js'))
+    config = require(path.join(process.cwd(), 'package.json'))
+  } catch (e) {}
+  try {
+    schema = require(path.join(process.cwd(), (config && config.schema) || 'schema'))
   } catch (e) {
-    console.log('\nSchema not found. Trying running `gest` with your `schema.js` in the current working directory.\n')
+    switch (e.code) {
+      case 'MODULE_NOT_FOUND':
+        console.log('\nSchema not found. Trying running `gest` with your `schema.js` in the current working directory.\n')
+        break
+      default: console.log(e)
+    }
     process.exit()
   }
 
