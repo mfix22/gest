@@ -14,18 +14,19 @@ function REPL (schema, options) {
   rl.on('SIGINT', () => rl.close())
   rl.on('SIGTSTP', () => rl.close())
 
-  function prompt () {
-    rl.question('Query: ', query => {
+  function prompt (ask) {
+    rl.question(ask, query => {
       if (query.toLowerCase().trim() === 'quit') return rl.close()
+      if (query.trim() === '') return prompt('Query: ') // §
       return sendQuery(schema, options)(query)
               .then(colorResponse)
               .then(console.log)
               .catch(console.log)
-              .then(() => prompt())
+              .then(() => prompt('Query: '))
     })
   }
 
-  prompt()
+  prompt('Query: ')
 }
 
 function sendQuery (schema, config) {
