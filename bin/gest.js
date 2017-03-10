@@ -8,9 +8,10 @@ const REPL = require('../src/REPL')
 const { readFile, checkPath, flagsToOptions, colorResponse } = require('../src/util')
 
 args
+  .option('schema', 'Path to your GraphQL schema')
+  .option(['I', 'inspect'], 'Print your GraphQL schema options')
   .option('header', 'HTTP request header')
   .option('baseUrl', 'Base URL for sending HTTP requests')
-  .option(['I', 'inspect'], 'Print your GraphQL schema options')
 
 const flags = args.parse(process.argv)
 
