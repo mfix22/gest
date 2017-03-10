@@ -1,6 +1,7 @@
 #! /usr/bin/env node
 const args = require('../args') // TODO
 const path = require('path')
+const { printSchema } = require('graphql')
 
 const gest = require('../src/index')
 const REPL = require('../src/REPL')
@@ -9,6 +10,7 @@ const { readFile, checkPath, flagsToOptions, colorResponse } = require('../src/u
 args
   .option('header', 'HTTP request header')
   .option('baseUrl', 'Base URL for sending HTTP requests')
+  .option(['I', 'inspect'], 'Print your GraphQL schema options')
 
 const flags = args.parse(process.argv)
 
@@ -22,6 +24,11 @@ try {
     const options = Object.assign({ schema: 'schema.js' }, config, flagsToOptions(flags))
 
     const schema = require(path.join(process.cwd(), options.schema))
+
+    if (flags.inspect) {
+      console.log(printSchema(schema))
+      process.exit()
+    }
 
     if (args.sub && args.sub.length) {
       checkPath(path.join(process.cwd(), args.sub[0]))
