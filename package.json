@@ -22,7 +22,9 @@
     "eslint-plugin-standard": "^2.1.1"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "eslint ./",
+    "test": "npm run lint && jest",
+    "start": "node ./bin/gest"
   },
   "author": "Michael Fix <@mfix22>",
   "license": "MIT",
