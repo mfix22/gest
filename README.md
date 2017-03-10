@@ -46,7 +46,7 @@ You can specify HTTP headers by using `-h key=value` flags.
 This is especially convenient if you are using a [`now`](https://zeit.co/now) workflow.
 ##### Example
 ```bash
-$ gest -h Authorization=e130294e -h Accept=application/json --baseURL https://my-app-2342.now.sh '{ test }'
+$ gest -h Authorization=e130294e --baseURL https://my-app-2342.now.sh '{ test }'
 ```
 
 ### Local module
