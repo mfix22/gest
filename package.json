@@ -1,6 +1,6 @@
 {
   "name": "graphicli",
-  "version": "0.7.0-beta",
+  "version": "0.7.1-beta",
   "description": "GraphQL testing CLI",
   "main": "./src/index.js",
   "engines": {
