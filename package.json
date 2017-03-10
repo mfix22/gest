@@ -40,7 +40,9 @@
     "graphql",
     "graphiql",
     "gest",
-    "test"
+    "test",
+    "testing",
+    "command-line"
   ],
   "bugs": {
     "url": "https://github.com/mfix22/graphicli/issues"
