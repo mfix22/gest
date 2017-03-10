@@ -39,12 +39,40 @@ Query: { test }
 ```
 
 ### HTTP
-If you specify a `baseURL` in your [`config`](#config), `gest` will send an [`axios`](https://github.com/mzabriskie/axios) `POST` request with your query in the body. Your `baseURL` must be a fully qualified URL.
+If you specify a `baseURL` in your [`config`](#config), `gest` will send an [`axios`](https://github.com/mzabriskie/axios) `POST` request with your query correctly encoded in the body. Your `baseURL` must be a valid URL.
 
 You can specifiy HTTP headers by using `-h key=value` flags.
 ##### Example
 ```bash
 $ gest -h Authorization=e130294e -h Accept=application/json '{ test }'
+```
+
+### Local module
+You can use `gest` as a local module in your unit/integration tests
+
+##### Example
+`gest` with [`jest`](https://facebook.github.io/jest/)
+```javascript
+
+const Gest = require('graphicli')
+const schema = require('../src/schema')
+
+const gest = Gest(schema, {
+  baseURL: 'test-server.now.sh',
+  headers: {
+    Authorization: 'Bearer token',
+    Accept: 'application/json'
+  }
+})
+
+describe('GraphQL', () => {
+  test('{ test }', () => {
+    return gest('{ test }').then(({ data, errors }) => {
+      expect(errors).to.be.undefined
+      expect(data).to.equal('success!')
+    })
+  })
+})
 ```
 
 ## Convention
@@ -76,3 +104,6 @@ You can configure the `graphicli` runtime by adding a `graphql` key to your `pac
 ##### Cons
 - :-1:  No query autocompletion ([yet](https://github.com/mfix22/graphicli/issues/1))
 - :-1:  No multi-line input without using separate files ([so far](https://github.com/mfix22/graphicli/issues/2))
+
+## Need help?
+Running `gest help` will show you all the `gest` options. If you have any other concerns, [post an issue!](https://github.com/mfix22/graphicli/issues)
