@@ -75,8 +75,12 @@ describe('GraphQL', () => {
 })
 ```
 
-### Inspection
+### Options
+##### `--inspect (-I)`
 For convenience, running `gest --inspect` or `gest -I` will print your GraphQL schema
+
+##### `--schema (-s)`
+You can specify the path to your GraphQL schema with `gest --schema ./path/to/schema.js`
 
 ## Convention
 `graphicli` will look to resolve your GraphQL schema in the current working directory for `schema.js`. If you wish to specify a different schema location, do so as `schema` in your [`config`](#config).
@@ -104,7 +108,7 @@ You can configure the `graphicli` runtime by adding a `gest` key to your `packag
 - :+1:  Run queries [from files](#usage) (save the queries you use most often)
 - :+1:  Helpful error messages
 
-##### Cons
+##### Drawbacks
 - :-1:  No query autocompletion ([yet](https://github.com/mfix22/graphicli/issues/1))
 - :-1:  No multi-line input without using separate files ([so far](https://github.com/mfix22/graphicli/issues/2))
 
