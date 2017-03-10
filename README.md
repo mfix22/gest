@@ -79,7 +79,7 @@ describe('GraphQL', () => {
 `graphicli` will look to resolve your GraphQL schema in the current working directory for `schema.js`. If you wish to specify a different schema location, do so as `schema` in your [`config`](#config).
 
 ## Config
-You can configure the `graphicli` runtime by adding a `graphql` key to your `package.json`, or specifying them as flags.
+You can configure the `graphicli` runtime by adding a `gest` key to your `package.json`, or specifying them as flags.
 
 ##### Example
 ```json
@@ -87,7 +87,7 @@ You can configure the `graphicli` runtime by adding a `graphql` key to your `pac
 {
   "name": "your_package",
   ...
-  "graphql": {
+  "gest": {
     "schema": "./path/to/schema",
     "baseURL": "https://your.url.sh"
   }
