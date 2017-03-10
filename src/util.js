@@ -18,18 +18,14 @@ exports.checkPath = (path) =>
 const pullHeaders = (header) => {
   if (!header) return undefined
   if (typeof header === 'string') {
-    const [key, value] = header
-    return {
-      headers: { [key]: value }
-    }
+    const [key, value] = header.split('=')
+    return { [key]: value }
   }
-  return {
-    headers: header.reduce((accum, next) => {
-      const [key, value] = next.split('=')
-      accum[key] = value
-      return accum
-    }, {})
-  }
+  return header.reduce((accum, next) => {
+    const [key, value] = next.split('=')
+    accum[key] = value
+    return accum
+  }, {})
 }
 
 // JSON.parse(JSON.stringify(obj)) removes undefined keys
