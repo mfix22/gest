@@ -1,4 +1,4 @@
-# :busts_in_silhouette: graphicli
+# 👨‍💻 graphicli
 #### A sensible GraphQL testing CLI.
 
 ## Usage
