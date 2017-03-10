@@ -68,8 +68,8 @@ const gest = Gest(schema, {
 describe('GraphQL', () => {
   test('{ test }', () => {
     return gest('{ test }').then(({ data, errors }) => {
-      expect(errors).to.be.undefined
-      expect(data).to.equal('success!')
+      expect(errors).toBeUndefined()
+      expect(data).toEqual('success!')
     })
   })
 })
