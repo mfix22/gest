@@ -77,7 +77,7 @@ describe('GraphQL', () => {
 })
 ```
 
-### Options
+## Options
 ##### `--inspect (-I)`
 For convenience, running `gest --inspect` or `gest -I` will print your GraphQL schema
 
