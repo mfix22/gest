@@ -48,3 +48,13 @@ exports.colorResponse = (res) =>
     .replace(/data/i, chalk.green.bold('$&'))
     .replace(/\\"/ig, `"`)
     .replace(/Did you mean ".+?"/ig, chalk.yellow.bold('$&'))}\n`
+
+exports.errorMessage = (e) => {
+  switch (e.code) {
+    case 'MODULE_NOT_FOUND': return `
+Schema not found. Trying running \`${chalk.yellow.bold('gest --schema ./path/to/schema.js')}\`
+or with \`schema.js\` in the current working directory.
+`
+    default: return e
+  }
+}

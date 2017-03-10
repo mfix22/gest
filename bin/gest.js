@@ -5,7 +5,7 @@ const { printSchema } = require('graphql')
 
 const gest = require('../src/index')
 const REPL = require('../src/REPL')
-const { readFile, checkPath, flagsToOptions, colorResponse } = require('../src/util')
+const { readFile, checkPath, flagsToOptions, colorResponse, errorMessage } = require('../src/util')
 
 args
   .option(['S', 'schema'], 'Path to your GraphQL schema')
@@ -44,10 +44,5 @@ try {
     }
   }
 } catch (e) {
-  switch (e.code) {
-    case 'MODULE_NOT_FOUND':
-      console.log('\nSchema not found. Trying running `gest` with your `schema.js` in the current working directory.\n')
-      break
-    default: console.log(e)
-  }
+  console.log(errorMessage(e))
 }
