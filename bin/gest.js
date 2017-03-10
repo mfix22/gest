@@ -1,5 +1,5 @@
 #! /usr/bin/env node
-const args = require('../args') // TODO
+const args = require('args')
 const path = require('path')
 const { printSchema } = require('graphql')
 
@@ -8,13 +8,12 @@ const REPL = require('../src/REPL')
 const { readFile, checkPath, flagsToOptions, colorResponse } = require('../src/util')
 
 args
-  .option('schema', 'Path to your GraphQL schema')
+  .option(['S', 'schema'], 'Path to your GraphQL schema')
   .option(['I', 'inspect'], 'Print your GraphQL schema options')
-  .option('header', 'HTTP request header')
-  .option('baseUrl', 'Base URL for sending HTTP requests')
+  .option(['H', 'header'], 'HTTP request header')
+  .option(['B', 'baseUrl'], 'Base URL for sending HTTP requests')
 
 const flags = args.parse(process.argv)
-
 try {
   if (!flags.help && !flags.version) {
     let config
