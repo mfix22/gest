@@ -41,10 +41,12 @@ Query: { test }
 ### HTTP
 If you specify a `baseURL` in your [`config`](#config), `gest` will send an [`axios`](https://github.com/mzabriskie/axios) `POST` request with your query correctly encoded in the body. Your `baseURL` must be a valid URL.
 
-You can specifiy HTTP headers by using `-h key=value` flags.
+You can specify HTTP headers by using `-h key=value` flags.
+
+This is especially convenient if you are using a [`now`](https://zeit.co/now) workflow.
 ##### Example
 ```bash
-$ gest -h Authorization=e130294e -h Accept=application/json '{ test }'
+$ gest -h Authorization=e130294e -h Accept=application/json --baseURL https://my-app-2342.now.sh '{ test }'
 ```
 
 ### Local module
