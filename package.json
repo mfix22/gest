@@ -27,7 +27,7 @@
   "author": "Michael Fix <@mfix22>",
   "license": "MIT",
   "bin": {
-    "gest": "./gest.js"
+    "gest": "./bin/gest.js"
   },
   "repository": {
     "type": "git",

@@ -1,8 +1,10 @@
 #! /usr/bin/env node
-const args = require('./args') // TODO
+const args = require('../args') // TODO
 const path = require('path')
-const { sendQuery, readFile, checkPath, REPL } = require('./src/api')
-const { flagsToOptions, colorResponse } = require('./src/util')
+
+const gest = require('../src/index')
+const REPL = require('../src/REPL')
+const { readFile, checkPath, flagsToOptions, colorResponse } = require('../src/util')
 
 args
   .option('header', 'HTTP request header')
@@ -22,10 +24,10 @@ try {
     const schema = require(path.join(process.cwd(), options.schema))
 
     if (args.sub && args.sub.length) {
-      checkPath(path.join(__dirname, args.sub[0]))
+      checkPath(path.join(process.cwd(), args.sub[0]))
       .then(readFile)
       .catch(() => args.sub[0])
-      .then(sendQuery(schema, options))
+      .then(gest(schema, options))
       .then(colorResponse)
       .then(console.log)
       .catch(console.log)

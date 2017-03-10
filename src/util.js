@@ -1,8 +1,19 @@
 const chalk = require('chalk')
+const fs = require('fs')
 
 exports.DEFAULT_CONFIG = { timeout: 10000, headers: {} }
 
 exports.encode = query => `"${query.replace(/\s/ig, '').replace(/"/ig, `\\"`).toString()}"`
+
+exports.readFile = (path) =>
+  new Promise((resolve, reject) =>
+    fs.readFile(path, 'utf8', (err, data) =>
+      err ? reject(err) : resolve(data)))
+
+exports.checkPath = (path) =>
+  new Promise((resolve, reject) =>
+    fs.stat(path, (err, stats) =>
+      err ? reject(err) : resolve(path)))
 
 const pullHeaders = (header) => {
   if (!header) return undefined
