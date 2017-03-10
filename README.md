@@ -75,6 +75,9 @@ describe('GraphQL', () => {
 })
 ```
 
+### Inspection
+For convenience, running `gest --inspect` or `gest -I` will print your GraphQL schema
+
 ## Convention
 `graphicli` will look to resolve your GraphQL schema in the current working directory for `schema.js`. If you wish to specify a different schema location, do so as `schema` in your [`config`](#config).
 
