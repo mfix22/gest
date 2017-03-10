@@ -41,7 +41,7 @@ Query: { test }
 ### HTTP
 If you specify a `baseURL` in your [`config`](#config), `gest` will send an [`axios`](https://github.com/mzabriskie/axios) `POST` request with your query correctly encoded in the body. Your `baseURL` must be a valid URL.
 
-You can specify HTTP headers by using `--header key=value` or `-H` flags.
+You can specify HTTP headers by using `-H key=value` [flags](#--header--h).
 
 This is especially convenient if you are using a [`now`](https://zeit.co/now) workflow.
 ##### Example
@@ -86,6 +86,9 @@ You can specify the path to your GraphQL schema with `gest --schema ./path/to/sc
 
 ##### `--baseURL (-B)`
 URL to send GraphQL queries to: `gest --baseURL https://test-server.now.sh`
+
+##### `--header (-H)`
+HTTP request headers to send with your queries: `gest --header Accept=application/json`
 
 ## Convention
 `graphicli` will look to resolve your GraphQL schema in the current working directory for `schema.js`. If you wish to specify a different schema location, do so as `schema` in your [`config`](#config).
