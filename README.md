@@ -41,7 +41,7 @@ Query: { test }
 ### HTTP
 If you specify a `baseURL` in your [`config`](#config), `gest` will send an [`axios`](https://github.com/mzabriskie/axios) `POST` request with your query correctly encoded in the body. Your `baseURL` must be a valid URL.
 
-You can specify HTTP headers by using `-H key=value` [flags](#--header--h).
+You can specify HTTP headers by using `-H key=value` [flags](#options).
 
 This is especially convenient if you are using a [`now`](https://zeit.co/now) workflow.
 ##### Example
