@@ -24,4 +24,4 @@ function Gest (schema, config = {}) {
   }
 }
 
-module.exports = Gest
+module.exports = exports.default = Gest

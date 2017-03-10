@@ -27,4 +27,4 @@ function REPL (schema, options) {
   prompt('Query: ')
 }
 
-module.exports = REPL
+module.exports = exports.default = REPL
