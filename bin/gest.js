@@ -36,20 +36,18 @@ try {
       findFiles()
         .then(values =>
           values.map(v => {
-            console.log(`${chalk.black.bgYellow(' RUNS ')} ${chalk.dim(v.replace(process.cwd(), '.'))}`)
-            return v
-          })
-          .map(v =>
+            const rep = chalk.dim(v.replace(process.cwd(), '.'))
+            console.log(`${chalk.black.bgYellow(' RUNS ')} ${rep}`)
             readFile(v)
               .then(gest(schema, options))
               .then(value => {
-                if (value.errors && value.data) return `${chalk.black.bgYellow(' WARNING ')} ${chalk.dim(v.replace(process.cwd(), '.'))}`
-                if (value.errors) return `${chalk.black.bgRed(' FAIL ')} ${chalk.dim(v.replace(process.cwd(), '.'))}`
-                return `${chalk.black.bgGreen(' PASS ')} ${chalk.dim(v.replace(process.cwd(), '.'))}`
+                if (value.errors && value.data) return `${chalk.black.bgYellow(' WARNING ')} ${rep}`
+                if (value.errors) return `${chalk.black.bgRed(' FAIL ')} ${rep}`
+                return `${chalk.black.bgGreen(' PASS ')} ${rep}`
               })
               .then(console.log)
               .catch(console.log)
-          ))
+          }))
         .catch(console.log)
     } else {
       // DEFAULT COMMAND
