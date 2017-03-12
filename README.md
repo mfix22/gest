@@ -117,7 +117,7 @@ You can configure the `graphicli` runtime by adding a `gest` key to your `packag
 
 ## Why `gest`?
 ##### Pros
-- :+1:  No restarting your dev server when you update your server
+- :+1:  No restarting your dev server when you make changes
 - :+1:  Testing your schema doesn't require a separate window (e.g. Graphiql)
 - :+1:  Run queries [from files](#usage) (save the queries you use most often)
 - :+1:  _Helpful_ error messages!
