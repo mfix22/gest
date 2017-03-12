@@ -18,7 +18,7 @@ function REPL (schema, options) {
       if (query.trim() === '') return prompt('Query: ') // §
       return gest(schema, options)(query)
               .then(colorResponse)
-              .then(console.log)
+              .then(message => console.log(`\n${message}\n`))
               .catch(console.log)
               .then(() => prompt('Query: '))
     })
