@@ -43,12 +43,16 @@ exports.correctURL = (url) => {
   throw new Error('Your `baseURL` must be a valid URL.')
 }
 
-exports.colorResponse = (res) =>
-  `\n${JSON.stringify(res, null, 2)
-    .replace(/errors/i, chalk.red.bold('$&'))
+exports.colorResponse = (res) => {
+  if (res.errors) {
+    return `${chalk.red.bold('Errors:')} ${res.errors.map(e =>
+      e.message.replace(/Did you mean ".+?"/ig, chalk.yellow.bold('$&'))).join('\n')}`
+  }
+
+  return `${JSON.stringify(res, null, 2)
     .replace(/data/i, chalk.green.bold('$&'))
-    .replace(/\\"/ig, `"`)
-    .replace(/Did you mean ".+?"/ig, chalk.yellow.bold('$&'))}\n`
+    .replace(/\\"/ig, `"`)}`
+}
 
 exports.errorMessage = (e) => {
   switch (e.code) {
@@ -85,16 +89,3 @@ exports.findFiles = function (regex = /.*.(query|graphql)/i) {
 
   return readDir(process.cwd())
 }
-
-// return resolve(Promise.all(
-//   files.map(f => new Promise((resolve, reject) => {
-//     if (regex.exec(f)) {
-//       return resolve(f)
-//     }
-    // fs.stat(f, (err, stats) => {
-    //   if (err) return reject(err)
-    //   // if (stats && stats.isDirectory()) return resolve(readDir(f))
-    //   if (regex.exec(f)) {
-    //     return resolve(f)
-    //   }
-    // })
