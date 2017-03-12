@@ -34,10 +34,14 @@ try {
 
     if (flags.all) {
       findFiles()
+        .then(values => {
+          console.log(values.map(v =>
+            `${chalk.black.bgYellow(' RUNS ')} ${chalk.dim(v.replace(process.cwd(), '.'))}`).join('\n') + '\n')
+          return values
+        })
         .then(values =>
           Promise.all(values.map(v => {
             const rep = chalk.dim(v.replace(process.cwd(), '.'))
-            console.log(`${chalk.black.bgYellow(' RUNS ')} ${rep}`)
             return readFile(v)
               .then(gest(schema, options))
               .then(value => {
@@ -50,7 +54,7 @@ try {
           })))
         .then(values =>
           values.map(([rep, errors]) =>
-            (errors ? `${chalk.dim.red(rep)}: ${errors}\n` : '')).join('\n'))
+            (errors ? `\n${chalk.dim.red(rep)}: ${errors}\n` : '')).join(''))
         .then(console.log)
         .catch(console.log)
     } else {
