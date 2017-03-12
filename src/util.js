@@ -1,5 +1,6 @@
 const chalk = require('chalk')
 const fs = require('fs')
+const path = require('path')
 
 exports.DEFAULT_CONFIG = { timeout: 10000, headers: {} }
 
@@ -55,7 +56,7 @@ exports.colorResponse = (res) => {
 
 exports.colorizeGraphQL = (message) =>
   message.replace(/type/g, chalk.dim.gray('$&'))
-         .replace(/\w+:/g, chalk.yellow('$&'))
+         .replace(/\w+:/g, chalk.bold.yellow('$&'))
          .replace(/\s+\w+/g, chalk.cyan('$&'))
          .replace(/(Query|Mutation)/g, chalk.white('$&'))
 
@@ -67,4 +68,30 @@ or with \`schema.js\` in the current working directory.
 `
     default: return e
   }
+}
+
+exports.findFiles = function (regex = /.*.(query|graphql)/i) {
+  const check = (name, file) => {
+    const newFile = path.join(name, file)
+    if (file === 'node_modules' || file === '.git') return
+    return new Promise((resolve, reject) => {
+      fs.stat(newFile, (err, stats) => {
+        if (err) return reject(err)
+        if (stats && stats.isDirectory()) return resolve(readDir(newFile))
+        if (regex.exec(newFile)) return resolve(newFile)
+        return resolve()
+      })
+    })
+  }
+
+  const readDir = (name) =>
+    new Promise((resolve, reject) =>
+      fs.readdir(name, (err, files) =>
+        err ? reject(err) : resolve(Promise.all(
+          files.map(check.bind(null, name))
+        )))).then(values =>
+          values.reduce((x, y) => x.concat(y), [])
+                .filter(value => value))
+
+  return readDir(process.cwd())
 }

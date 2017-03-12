@@ -2,16 +2,26 @@
 const args = require('args')
 const path = require('path')
 const { printSchema } = require('graphql')
+const chalk = require('chalk')
 
 const gest = require('../src/index')
 const REPL = require('../src/REPL')
-const { readFile, checkPath, flagsToOptions, colorResponse, colorizeGraphQL, errorMessage } = require('../src/util')
+const {
+  readFile,
+  checkPath,
+  flagsToOptions,
+  colorResponse,
+  colorizeGraphQL,
+  findFiles,
+  errorMessage
+} = require('../src/util')
 
 args
   .option(['S', 'schema'], 'Path to your GraphQL schema')
-  .option(['I', 'inspect'], 'Print your GraphQL schema options')
   .option(['H', 'header'], 'HTTP request header')
+  .option(['I', 'inspect'], 'Print your GraphQL schema options')
   .option(['B', 'baseUrl'], 'Base URL for sending HTTP requests')
+  .option(['A', 'all'], 'Run `gest` for all *.query files')
 
 const flags = args.parse(process.argv)
 try {
@@ -30,18 +40,45 @@ try {
       process.exit()
     }
 
-    if (args.sub && args.sub.length) {
-      args.sub.map(q =>
-        checkPath(path.join(process.cwd(), q))
-          .then(readFile)
-          .catch(() => q)
-          .then(gest(schema, options))
-          .then(colorResponse)
-          .then(res => console.log(`\n${res}\n`))
-          .catch(console.log))
+    if (flags.all) {
+      findFiles()
+        .then(values => {
+          console.log(`${chalk.black.bgYellow(' RUNS ')} ${values.map(v => `${chalk.dim(v.replace(process.cwd(), '.'))}`).join(' ')}\n`)
+          return values
+        })
+        .then(values =>
+          Promise.all(values.map(v => {
+            const rep = chalk.dim(v.replace(process.cwd(), '.'))
+            return readFile(v)
+              .then(gest(schema, options))
+              .then(value => {
+                if (value.errors && value.data) console.log(`${chalk.black.bgYellow(' WARNING ')} ${rep}`)
+                else if (value.errors) console.log(`${chalk.black.bgRed(' FAIL ')} ${rep}`)
+                else console.log(`${chalk.black.bgGreen(' PASS ')} ${rep}`)
+                return [rep, value.errors]
+              })
+              .catch(console.log)
+          })))
+        .then(values =>
+          values.map(([rep, errors]) =>
+            (errors ? `\n${chalk.dim.red(rep)}: ${errors}\n` : '')).join(''))
+        .then(console.log)
+        .catch(console.log)
     } else {
-      // REPL
-      REPL(schema, options)
+      // DEFAULT COMMAND
+      if (args.sub && args.sub.length) {
+        args.sub.map(q =>
+          checkPath(path.join(process.cwd(), q))
+            .then(readFile)
+            .catch(() => q)
+            .then(gest(schema, options))
+            .then(colorResponse)
+            .then(message => console.log(`\n${message}\n`))
+            .catch(console.log))
+      } else {
+        // REPL
+        REPL(schema, options)
+      }
     }
   }
 } catch (e) {
