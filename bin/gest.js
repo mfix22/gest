@@ -31,13 +31,14 @@ try {
     }
 
     if (args.sub && args.sub.length) {
-      checkPath(path.join(process.cwd(), args.sub[0]))
-      .then(readFile)
-      .catch(() => args.sub[0])
-      .then(gest(schema, options))
-      .then(colorResponse)
-      .then(console.log)
-      .catch(console.log)
+      args.sub.map(q =>
+        checkPath(path.join(process.cwd(), q))
+          .then(readFile)
+          .catch(() => q)
+          .then(gest(schema, options))
+          .then(colorResponse)
+          .then(console.log)
+          .catch(console.log))
     } else {
       // REPL
       REPL(schema, options)
