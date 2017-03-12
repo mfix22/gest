@@ -120,7 +120,7 @@ You can configure the `graphicli` runtime by adding a `gest` key to your `packag
 - :+1:  No restarting your dev server when you update your server
 - :+1:  Testing your schema doesn't require a separate window (e.g. Graphiql)
 - :+1:  Run queries [from files](#usage) (save the queries you use most often)
-- :+1:  Helpful error messages
+- :+1:  _Helpful_ error messages!
 
 ##### Drawbacks
 - :-1:  No query autocompletion ([yet](https://github.com/mfix22/graphicli/issues/1))
