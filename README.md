@@ -25,6 +25,12 @@ $ gest test.query
 }
 ```
 
+or multiple
+```bash
+$ gest test.query '{ test }' introspection.query
+# will run all three queries!
+```
+
 ### REPL
 ```bash
 $ gest
