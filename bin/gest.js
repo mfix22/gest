@@ -38,7 +38,7 @@ try {
           values.map(v => {
             const rep = chalk.dim(v.replace(process.cwd(), '.'))
             console.log(`${chalk.black.bgYellow(' RUNS ')} ${rep}`)
-            readFile(v)
+            return readFile(v)
               .then(gest(schema, options))
               .then(value => {
                 if (value.errors && value.data) return `${chalk.black.bgYellow(' WARNING ')} ${rep}`
