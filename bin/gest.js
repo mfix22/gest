@@ -37,7 +37,7 @@ try {
           .catch(() => q)
           .then(gest(schema, options))
           .then(colorResponse)
-          .then(console.log)
+          .then(res => console.log(`\n${res}\n`))
           .catch(console.log))
     } else {
       // REPL

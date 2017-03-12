@@ -42,12 +42,16 @@ exports.correctURL = (url) => {
   throw new Error('Your `baseURL` must be a valid URL.')
 }
 
-exports.colorResponse = (res) =>
-  `\n${JSON.stringify(res, null, 2)
-    .replace(/errors/i, chalk.red.bold('$&'))
+exports.colorResponse = (res) => {
+  if (res.errors) {
+    return `${chalk.red.bold('Errors:')} ${res.errors.map(e =>
+      e.message.replace(/Did you mean ".+?"/ig, chalk.yellow.bold('$&'))).join('\n')}`
+  }
+
+  return `${JSON.stringify(res, null, 2)
     .replace(/data/i, chalk.green.bold('$&'))
-    .replace(/\\"/ig, `"`)
-    .replace(/Did you mean ".+?"/ig, chalk.yellow.bold('$&'))}\n`
+    .replace(/\\"/ig, `"`)}`
+}
 
 exports.errorMessage = (e) => {
   switch (e.code) {
