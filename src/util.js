@@ -53,6 +53,12 @@ exports.colorResponse = (res) => {
     .replace(/\\"/ig, `"`)}`
 }
 
+exports.colorizeGraphQL = (message) =>
+  message.replace(/type/g, chalk.dim.gray('$&'))
+         .replace(/\w+:/g, chalk.yellow('$&'))
+         .replace(/\s+\w+/g, chalk.cyan('$&'))
+         .replace(/(Query|Mutation)/g, chalk.white('$&'))
+
 exports.errorMessage = (e) => {
   switch (e.code) {
     case 'MODULE_NOT_FOUND': return `

@@ -5,7 +5,7 @@ const { printSchema } = require('graphql')
 
 const gest = require('../src/index')
 const REPL = require('../src/REPL')
-const { readFile, checkPath, flagsToOptions, colorResponse, errorMessage } = require('../src/util')
+const { readFile, checkPath, flagsToOptions, colorResponse, colorizeGraphQL, errorMessage } = require('../src/util')
 
 args
   .option(['S', 'schema'], 'Path to your GraphQL schema')
@@ -26,7 +26,7 @@ try {
     const schema = require(path.join(process.cwd(), options.schema))
 
     if (flags.inspect) {
-      console.log(printSchema(schema))
+      console.log(colorizeGraphQL(printSchema(schema)))
       process.exit()
     }
 
