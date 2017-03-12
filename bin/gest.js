@@ -35,19 +35,23 @@ try {
     if (flags.all) {
       findFiles()
         .then(values =>
-          values.map(v => {
+          Promise.all(values.map(v => {
             const rep = chalk.dim(v.replace(process.cwd(), '.'))
             console.log(`${chalk.black.bgYellow(' RUNS ')} ${rep}`)
             return readFile(v)
               .then(gest(schema, options))
               .then(value => {
-                if (value.errors && value.data) return `${chalk.black.bgYellow(' WARNING ')} ${rep}`
-                if (value.errors) return `${chalk.black.bgRed(' FAIL ')} ${rep}`
-                return `${chalk.black.bgGreen(' PASS ')} ${rep}`
+                if (value.errors && value.data) console.log(`${chalk.black.bgYellow(' WARNING ')} ${rep}`)
+                else if (value.errors) console.log(`${chalk.black.bgRed(' FAIL ')} ${rep}`)
+                else console.log(`${chalk.black.bgGreen(' PASS ')} ${rep}`)
+                return [rep, value.errors]
               })
-              .then(console.log)
               .catch(console.log)
-          }))
+          })))
+        .then(values =>
+          values.map(([rep, errors]) =>
+            (errors ? `${chalk.dim.red(rep)}: ${errors}\n` : '')).join('\n'))
+        .then(console.log)
         .catch(console.log)
     } else {
       // DEFAULT COMMAND
