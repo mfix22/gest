@@ -13,7 +13,7 @@ args
   .option(['I', 'inspect'], 'Print your GraphQL schema options')
   .option(['H', 'header'], 'HTTP request header')
   .option(['B', 'baseUrl'], 'Base URL for sending HTTP requests')
-  .option('all', 'Run all *.query files')
+  .option(['A', 'all'], 'Run all *.query files')
 
 const flags = args.parse(process.argv)
 try {
@@ -35,8 +35,7 @@ try {
     if (flags.all) {
       findFiles()
         .then(values => {
-          console.log(values.map(v =>
-            `${chalk.black.bgYellow(' RUNS ')} ${chalk.dim(v.replace(process.cwd(), '.'))}`).join('\n') + '\n')
+          console.log(`${chalk.black.bgYellow(' RUNS ')} ${values.map(v => `${chalk.dim(v.replace(process.cwd(), '.'))}`).join(' ')}\n`)
           return values
         })
         .then(values =>
