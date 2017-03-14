@@ -19,7 +19,8 @@
     "eslint": "^3.17.0",
     "eslint-config-standard": "^7.0.0",
     "eslint-plugin-promise": "^3.5.0",
-    "eslint-plugin-standard": "^2.1.1"
+    "eslint-plugin-standard": "^2.1.1",
+    "jest": "^19.0.2"
   },
   "scripts": {
     "lint": "eslint ./",
