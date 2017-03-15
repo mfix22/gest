@@ -4,7 +4,7 @@ const path = require('path')
 
 exports.DEFAULT_CONFIG = { timeout: 10000, headers: {} }
 
-exports.encode = query => `"${query.replace(/\s/ig, ' ').replace(/"/ig, `\\"`).toString()}"`
+exports.encode = query => `"${query.replace(/\s+/ig, ' ').replace(/"/ig, `\\"`).toString()}"`
 
 exports.readFile = (path) =>
   new Promise((resolve, reject) =>
