@@ -44,14 +44,23 @@ exports.correctURL = (url) => {
 }
 
 exports.colorResponse = (res) => {
-  if (res.errors) {
-    return `${chalk.red.bold('Errors:')} ${res.errors.map(e =>
-      e.message.replace(/Did you mean ".+?"/ig, chalk.yellow.bold('$&'))).join('\n')}`
+  const out = []
+
+  if (res.data) {
+    out.push(`${JSON.stringify({ data: res.data }, null, 2)
+      .replace(/data/i, chalk.green.bold('$&'))
+      .replace(/\\"/ig, `"`)}`)
+    if (res.errors) out.push('')
   }
 
-  return `${JSON.stringify(res, null, 2)
-    .replace(/data/i, chalk.green.bold('$&'))
-    .replace(/\\"/ig, `"`)}`
+  if (res.errors) {
+    out.push(
+      chalk.red.bold.underline('Errors'),
+      ...res.errors.map(e => `${chalk.dim('-')} ${e.message.replace(/Did you mean ".+?"/ig, chalk.yellow.bold('$&'))}`)
+    )
+  }
+
+  return out.join('\n')
 }
 
 exports.colorizeGraphQL = (message) =>
