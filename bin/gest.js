@@ -1,7 +1,6 @@
 #! /usr/bin/env node
 const args = require('args')
 const path = require('path')
-const { printSchema } = require('graphql')
 const chalk = require('chalk')
 
 const gest = require('../src/index')
@@ -15,6 +14,16 @@ const {
   findFiles,
   errorMessage
 } = require('../src/util')
+
+let GraphQL
+try {
+  // do to GraphQL schema issue [see](https://github.com/graphql/graphiql/issues/58)
+  GraphQL = require(path.join(process.cwd(), './node_modules/graphql'))
+} catch (e) {
+  // fallback if graphql is not installed locally
+  GraphQL = require('graphql')
+}
+const { printSchema } = GraphQL
 
 args
   .option(['S', 'schema'], 'Path to your GraphQL schema')
@@ -36,7 +45,7 @@ try {
     const schema = require(path.join(process.cwd(), options.schema))
 
     if (flags.inspect) {
-      console.log(colorizeGraphQL(printSchema(schema)))
+      console.log('\n' + colorizeGraphQL(printSchema(schema)))
       process.exit()
     }
 
