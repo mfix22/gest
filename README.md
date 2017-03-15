@@ -84,6 +84,10 @@ describe('GraphQL', () => {
 ```
 
 ## Options
+##### `--all (-A)`
+Running `gest --all` will run all files matching `*.query` or `*.graphql` and
+simply print if each query succeeded without errors
+
 ##### `--inspect (-I)`
 For convenience, running `gest --inspect` or `gest -I` will print your GraphQL schema
 
