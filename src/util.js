@@ -79,7 +79,7 @@ or with \`schema.js\` in the current working directory.
   }
 }
 
-exports.findFiles = function (regex = /.*.(query|graphql)$/i) {
+exports.findFiles = function (regex = /.*.(query|graphql|gql)$/i) {
   const check = (name, file) => {
     const newFile = path.join(name, file)
     if (file === 'node_modules' || file === '.git') return
