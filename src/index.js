@@ -27,6 +27,7 @@ function Gest (schema, config = {}) {
 
       return instance.post(corrected, encode(query))
                      .then(res => res.data)
+                     .catch(e => e.response.data)
     }
 
     if (config.verbose) console.log(query)
