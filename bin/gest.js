@@ -36,13 +36,18 @@ const flags = args.parse(process.argv)
 try {
   if (!flags.help && !flags.version) {
     let config
+    let schema
     try {
       config = require(path.join(process.cwd(), 'package.json')).gest
     } catch (e) {}
 
     const options = Object.assign({ schema: 'schema.js' }, config, flagsToOptions(flags))
 
-    const schema = require(path.join(process.cwd(), options.schema))
+    try {
+      schema = require(path.join(process.cwd(), options.schema))
+    } catch (e) {
+      if (!flags.baseUrl) throw e
+    }
 
     if (flags.inspect) {
       console.log('\n' + colorizeGraphQL(printSchema(schema)))
