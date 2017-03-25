@@ -30,7 +30,7 @@ function Gest (schema, config = {}) {
     }
 
     if (config.verbose) console.log(query)
-    return graphql(schema, query)
+    return graphql(schema, query, null, { headers })
   }
 }
 
