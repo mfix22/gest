@@ -98,7 +98,8 @@ You can specify the path to your GraphQL schema with `gest --schema ./path/to/sc
 URL to send GraphQL queries to: `gest --baseURL https://test-server.now.sh`
 
 ##### `--header (-H)`
-HTTP request headers to send with your queries: `gest --header Accept=application/json`
+HTTP request headers to send with your queries: `gest --header Accept=application/json`.
+Headers will be passed into context as `context.headers` for every query for local testing.
 
 ## Convention
 `graphicli` will look to resolve your GraphQL schema in the current working directory for `schema.js`. If you wish to specify a different schema location, do so as `schema` in your [`config`](#config).
@@ -124,6 +125,7 @@ You can configure the `graphicli` runtime by adding a `gest` key to your `packag
 - :+1:  No restarting your dev server when you make changes
 - :+1:  Testing your schema doesn't require a separate window (e.g. Graphiql)
 - :+1:  Run queries [from files](#usage) (save the queries you use most often)
+- :+1: Easy regression testing by with `gest --all`.
 - :+1:  _Helpful_ error messages!
 
 ##### Drawbacks
@@ -132,3 +134,6 @@ You can configure the `graphicli` runtime by adding a `gest` key to your `packag
 
 ## Need help?
 Running `gest help` will show you all the `gest` options. If you have any other concerns, [post an issue!](https://github.com/mfix22/graphicli/issues)
+
+## License
+MIT
