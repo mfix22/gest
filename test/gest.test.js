@@ -1,16 +1,24 @@
-/* global describe, test, expect */
+/* global describe, test, expect, gest */
 const Gest = require('../src/index')
 const schema = require('./_schema') // test fixture
+const UTIL = require('../src/util')
 
-const { encode, flagsToOptions, correctURL } = require('../src/util')
+Gest(schema) // sets Global `gest`
 
-describe('GEST', () => {
+describe('GLOBAL', () => {
+  gest('test global gest', `
+    {
+      test
+    }
+  `)
+})
+
+describe('LOCAL', () => {
   test('return result if query is okay', () => {
+    // test local
     const gest = Gest(schema)
 
-    return gest('{ test }').then(({ data, errors }) => {
-      expect(data).not.toBeUndefined()
-      expect(errors).toBeUndefined()
+    return gest('{ test }').then(({ data }) => {
       expect(data.test).toBe('success!')
     })
   })
@@ -33,7 +41,7 @@ describe('UTIL', () => {
         }
       }
     `
-    expect(encode(query)).toBe('"{test(password:\\"password\\"){id}}"')
+    expect(UTIL.encode(query)).toBe('" { test(password: \\"password\\") { id } } "')
   })
   test('flagsToOptions()', () => {
     const headers = ['key=value', 'key2=value2']
@@ -44,7 +52,7 @@ describe('UTIL', () => {
       header: headers
     }
 
-    expect(flagsToOptions(options)).toEqual({
+    expect(UTIL.flagsToOptions(options)).toEqual({
       baseURL: 'url',
       headers: {
         key: 'value',
@@ -53,7 +61,7 @@ describe('UTIL', () => {
     })
 
     const header = 'key=value'
-    expect(flagsToOptions({ header })).toEqual({
+    expect(UTIL.flagsToOptions({ header })).toEqual({
       headers: {
         key: 'value'
       }
@@ -64,8 +72,8 @@ describe('UTIL', () => {
     const url2 = 'http://test.com'
     const url3 = 'test.com/test'
 
-    expect(correctURL(url1)).toEqual('https://test.com')
-    expect(correctURL(url2)).toEqual('http://test.com')
-    expect(correctURL(url3)).toEqual('https://test.com/test')
+    expect(UTIL.correctURL(url1)).toEqual('https://test.com')
+    expect(UTIL.correctURL(url2)).toEqual('http://test.com')
+    expect(UTIL.correctURL(url3)).toEqual('https://test.com/test')
   })
 })
