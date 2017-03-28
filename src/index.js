@@ -1,16 +1,6 @@
 const axios = require('axios')
-const path = require('path')
 
-let GraphQL
-try {
-  // do to GraphQL schema issue [see](https://github.com/graphql/graphiql/issues/58)
-  GraphQL = require(path.join(process.cwd(), './node_modules/graphql'))
-} catch (e) {
-  // fallback if graphql is not installed locally
-  GraphQL = require('graphql')
-}
-
-const { graphql } = GraphQL
+const { graphql } = require('./import').getGraphQL()
 const { correctURL, encode } = require('./util')
 
 function Gest (schema, config = {}) {
