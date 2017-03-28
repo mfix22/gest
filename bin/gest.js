@@ -34,7 +34,7 @@ try {
     schema = require(path.join(process.cwd(), options.schema))
   } catch (e) {
     // schema is required unless sending over HTTP
-    if (!flags.baseUrl) throw e
+    if (!options.baseURL) throw e
   }
 
   if (flags.inspect) {
