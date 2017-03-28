@@ -50,6 +50,7 @@ If you specify a `baseURL` in your [`config`](#config), `gest` will send an [`ax
 You can specify HTTP headers by using `-H key=value` [flags](#options).
 
 This is especially convenient if you are using a [`now`](https://zeit.co/now) workflow.
+
 ##### Example
 ```bash
 $ gest -H Authorization=e130294e --baseURL https://test-server-2ae34342.now.sh '{ test }'
