@@ -1,12 +1,13 @@
-# 👨‍💻 graphicli
-#### A sensible GraphQL testing CLI.
+# 👨‍💻 gest
+#### A sensible GraphQL testing CLI and tool.
 
 ## Usage
+_Sorry_ about the package name! Hopefully this will change!
 ```bash
 $ npm install -g graphicli
 ```
 
-then send queries with `gest` (pronounced _guest_ [/ɡest/])
+then send queries with `gest` (pronounced _guest_ [/ɡest/]).
 ```bash
 $ gest [options] [quotedQuery | pathToFileWithQuery]
 ```
@@ -47,7 +48,7 @@ Query: { test }
 ### HTTP
 If you specify a `baseURL` in your [`config`](#config), `gest` will send an [`axios`](https://github.com/mzabriskie/axios) `POST` request with your query correctly encoded in the body. Your `baseURL` must be a valid URL.
 
-You can specify HTTP headers by using `-H key=value` [flags](#options).
+You can specify HTTP headers by using `-H key=value` [flags](#flags).
 
 This is especially convenient if you are using a [`now`](https://zeit.co/now) workflow.
 
@@ -59,8 +60,7 @@ $ gest -H Authorization=e130294e --baseURL https://test-server-2ae34342.now.sh '
 ### Local module
 You can use `gest` as a local module in your unit/integration tests
 
-##### Example
-`gest` with [`jest`](https://facebook.github.io/jest/)
+##### Examples
 ```javascript
 
 const Gest = require('graphicli')
@@ -84,7 +84,22 @@ describe('GraphQL', () => {
 })
 ```
 
-## Options
+or use Global `gest` with [`jest`](https://facebook.github.io/jest/).
+```javascript
+// will create global `gest()` function
+Gest(schema)
+
+// pass a test name and a query
+gest('test query', `
+  {
+    test
+  }
+`)
+```
+
+**Note**: Global functionality will be turned on by default if `NODE_ENV === test` and if `global.test` or `global.it` exists
+
+## Flags
 ##### `--all (-A)`
 Running `gest --all` will run all files matching `*.query`, `*.graphql`, or `*.gql` and
 simply print if each query succeeded without errors
@@ -103,14 +118,14 @@ HTTP request headers to send with your queries: `gest --header Accept=applicatio
 Headers will be passed into context as `context.headers` for every query for local testing.
 
 ## Convention
-`graphicli` will look to resolve your GraphQL schema in the current working directory for `schema.js`. If you wish to specify a different schema location, do so as `schema` in your [`config`](#config).
+The `gest` CLI will look to resolve your GraphQL schema in the current working directory for `schema.js`. If you wish to specify a different schema location, do so as `schema` in your [`config`](#config).
 
 ## Config
-You can configure the `graphicli` runtime by adding a `gest` key to your `package.json`, or specifying them as flags.
+You can configure the `gest` runtime by adding a `gest` key to your `package.json`, or specifying them as flags.
 
 ##### Example
-```json
-# package.json
+```javascript
+// package.json
 {
   "name": "your_package",
   ...
@@ -127,6 +142,7 @@ You can configure the `graphicli` runtime by adding a `gest` key to your `packag
 - :+1:  Testing your schema doesn't require a separate window (e.g. Graphiql)
 - :+1:  Run queries [from files](#usage) (save the queries you use most often)
 - :+1: Easy regression testing by with `gest --all`.
+- :+1: Simple integration with `jest`
 - :+1:  _Helpful_ error messages!
 
 ##### Drawbacks
