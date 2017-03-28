@@ -2,8 +2,6 @@ const chalk = require('chalk')
 const fs = require('fs')
 const path = require('path')
 
-exports.DEFAULT_CONFIG = { timeout: 10000, headers: {} }
-
 exports.encode = query => `"${query.replace(/\s+/ig, ' ').replace(/"/ig, `\\"`).toString()}"`
 
 exports.readFile = (path) =>

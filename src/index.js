@@ -11,10 +11,10 @@ try {
 }
 
 const { graphql } = GraphQL
-const { correctURL, encode, DEFAULT_CONFIG } = require('./util')
+const { correctURL, encode } = require('./util')
 
 function Gest (schema, config = {}) {
-  const { baseURL, headers, timeout } = Object.assign(DEFAULT_CONFIG, config)
+  const { baseURL, headers, timeout } = Object.assign({ timeout: 10000, headers: {} }, config) // default config
   return function (query) {
     if (baseURL) {
       const instance = axios.create({
