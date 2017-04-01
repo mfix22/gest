@@ -136,24 +136,25 @@ You can configure the `gest` runtime by adding a `gest` key to your `package.jso
 }
 ```
 
-## Contributing
-1. [Fork](https://help.github.com/articles/fork-a-repo/) this repository to your own GitHub account and then [clone](https://help.github.com/articles/cloning-a-repository/) it locally
-2. Install the dependencies: `npm install`
-3. Run `npm link` to link the scripts found in `bin` for testing terminal commands
-4. Before submitting a pull request, run `npm test`
-
 ## Why `gest`?
 ##### Pros
 - :+1:  No restarting your dev server when you make changes
 - :+1:  Testing your schema doesn't require a separate window (e.g. Graphiql)
 - :+1:  Run queries [from files](#usage) (save the queries you use most often)
-- :+1: Easy regression testing by with `gest --all`.
-- :+1: Simple integration with `jest`
+- :+1:  Simple unit testing for your schema
+- :+1:  Easy regression testing with [`gest --all`](#flags).
+- :+1:  Simple integration/deployment testing with [`--baseURL`](#http)
 - :+1:  _Helpful_ error messages!
 
 ##### Drawbacks
 - :-1:  No query autocompletion ([yet](https://github.com/mfix22/graphicli/issues/1))
 - :-1:  No multi-line input without using separate files ([so far](https://github.com/mfix22/graphicli/issues/2))
+
+## Contributing
+1. [Fork](https://help.github.com/articles/fork-a-repo/) this repository to your own GitHub account and then [clone](https://help.github.com/articles/cloning-a-repository/) it locally
+2. Install the dependencies: `npm install`
+3. Run `npm link` to link the scripts found in `bin` for testing terminal commands
+4. Before submitting a pull request, run `npm test`
 
 ## Need help?
 Running `gest help` will show you all the `gest` options. If you have any other concerns, [post an issue!](https://github.com/mfix22/graphicli/issues)
