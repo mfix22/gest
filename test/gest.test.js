@@ -71,9 +71,11 @@ describe('UTIL', () => {
     const url1 = 'test.com'
     const url2 = 'http://test.com'
     const url3 = 'test.com/test'
+    const localUrl = 'localhost:8080'
 
     expect(UTIL.correctURL(url1)).toEqual('https://test.com')
     expect(UTIL.correctURL(url2)).toEqual('http://test.com')
     expect(UTIL.correctURL(url3)).toEqual('https://test.com/test')
+    expect(UTIL.correctURL(localUrl)).toEqual('localhost:8080')
   })
 })

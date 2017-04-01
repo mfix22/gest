@@ -24,7 +24,7 @@
   },
   "scripts": {
     "lint": "eslint ./",
-    "test": "npm run lint && jest",
+    "test": "npm run lint && NODE_ENV=test jest",
     "start": "node ./bin/gest"
   },
   "author": "Michael Fix <@mfix22>",
