@@ -52,7 +52,7 @@ try {
         Promise.all(values.map(v => {
           const rep = chalk.dim(v.replace(process.cwd(), '.'))
           return readFile(v)
-            .then(gest(schema, options))
+            .then(gest(schema, Object.assign(options, { verbose: false })))
             .then(value => {
               if (value.errors && value.data) console.log(`${chalk.black.bgYellow(' WARNING ')} ${rep}`)
               else if (value.errors) console.log(`${chalk.black.bgRed(' FAIL ')} ${rep}`)
