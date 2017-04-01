@@ -136,6 +136,12 @@ You can configure the `gest` runtime by adding a `gest` key to your `package.jso
 }
 ```
 
+## Contributing
+1. [Fork](https://help.github.com/articles/fork-a-repo/) this repository to your own GitHub account and then [clone](https://help.github.com/articles/cloning-a-repository/) it locally
+2. Install the dependencies: `npm install`
+3. Run `npm link` to link the scripts found in `bin` for testing terminal commands
+4. Before submitting a pull request, run `npm test`
+
 ## Why `gest`?
 ##### Pros
 - :+1:  No restarting your dev server when you make changes
