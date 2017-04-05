@@ -1,5 +1,7 @@
+// Packages
 const axios = require('axios')
 
+// Ours
 const { graphql } = require('./import').getGraphQL()
 const { correctURL, encode } = require('./util')
 

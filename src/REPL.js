@@ -1,5 +1,7 @@
+// Native
 const readline = require('readline')
 
+// Ours
 const gest = require('./index')
 const { colorResponse } = require('./util')
 

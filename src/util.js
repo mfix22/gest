@@ -1,6 +1,9 @@
-const chalk = require('chalk')
+// Native
 const fs = require('fs')
 const path = require('path')
+
+// Packages
+const chalk = require('chalk')
 
 exports.encode = query => `"${query.replace(/\s+/ig, ' ').replace(/"/ig, `\\"`).toString()}"`
 
