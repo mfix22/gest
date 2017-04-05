@@ -11,9 +11,7 @@
     "axios": "^0.15.3",
     "chalk": "^1.1.3",
     "fs": "latest",
-    "graphql": "^0.9.1",
-    "path": "latest",
-    "readline": "latest"
+    "graphql": "^0.9.1"
   },
   "devDependencies": {
     "eslint": "^3.17.0",
