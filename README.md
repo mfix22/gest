@@ -2,7 +2,7 @@
 #### A sensible GraphQL testing CLI and tool.
 
 ## Usage
-_Sorry_ about the package name! Hopefully this will change!
+_Sorry_ about the package name!
 ```bash
 $ npm install -g graphicli
 ```
