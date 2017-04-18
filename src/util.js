@@ -5,7 +5,9 @@ const path = require('path')
 // Packages
 const chalk = require('chalk')
 
-exports.encode = query => `"${query.replace(/\s+/ig, ' ').replace(/"/ig, `\\"`).toString()}"`
+exports.encode = query => ({
+  query: query.replace(/\s+/ig, ' ').replace(/"/ig, `\\"`).trim().toString()
+})
 
 exports.readFile = (path) =>
   new Promise((resolve, reject) =>
@@ -39,9 +41,9 @@ exports.flagsToOptions = ({baseUrl, schema, header}) =>
   }))
 
 exports.correctURL = (url) => {
-  if (/(https?:\/\/)[\w-]+(\.[a-z-]+)+\.?(:\d+)?(\/\S*)?/gi.test(url)) return url
-  if (/[\w-]+(\.[a-z-]+)+\.?(:\d+)?(\/\S*)?/gi.test(url)) return `https://${url}`
-  if (/localhost:\d\d\d\d/gi.test(url)) return url
+  if (/(https?:\/\/)[\w-]+(\.[a-z-]+)+\.?(:\d+)?(\/\S*)?/i.test(url)) return url
+  if (/[\w-]+(\.[a-z-]+)+\.?(:\d+)?(\/\S*)?/i.test(url)) return `https://${url}`
+  if (/(http:\/\/)?localhost:\d\d\d\d/i.test(url)) return url
   throw new Error('Your `baseURL` must be a valid URL.')
 }
 
