@@ -41,7 +41,7 @@ describe('UTIL', () => {
         }
       }
     `
-    expect(UTIL.encode(query)).toBe('" { test(password: \\"password\\") { id } } "')
+    expect(UTIL.encode(query)).toMatchObject({ query: '{ test(password: \\"password\\") { id } }' })
   })
   test('flagsToOptions()', () => {
     const headers = ['key=value', 'key2=value2']
