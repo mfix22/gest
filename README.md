@@ -1,10 +1,10 @@
-# 👨‍💻 gest
+# <img src='https://raw.githubusercontent.com/mfix22/graphicli/master/logo/logo.png' height='80px' alt='Gest - A sensible GraphQL testing CLI and tool.'>
 #### A sensible GraphQL testing CLI and tool.
 
 ## Usage
-_Sorry_ about the package name!
 ```bash
 $ npm install -g graphicli
+# (Sorry about the package name!)
 ```
 
 then send queries with `gest` (pronounced _guest_ [/ɡest/]).
@@ -158,6 +158,9 @@ You can configure the `gest` runtime by adding a `gest` key to your `package.jso
 
 ## Need help?
 Running `gest help` will show you all the `gest` options. If you have any other concerns, [post an issue!](https://github.com/mfix22/graphicli/issues)
+
+## Logo
+The official `gest` logo is designed by [`@jakedex`](https://github.com/jakedex)
 
 ## License
 MIT
