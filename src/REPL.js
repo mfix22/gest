@@ -82,7 +82,7 @@ function REPL (schema, options) {
         }
       }
 
-      if (query.trim() === '') return prompt('Query: ') // §
+      if (query.trim() === '') return prompt('> ') // §
 
       return gest(schema, options)(query)
               .then(colorResponse)

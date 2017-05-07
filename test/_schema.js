@@ -15,7 +15,10 @@ module.exports = new GraphQLSchema({
     fields: {
       test: {
         type: GraphQLString,
-        resolve: () => 'success!'
+        args: {
+          string: { type: GraphQLString }
+        },
+        resolve: (root, args) => `success ${args.string ? `with args: ${JSON.stringify(args.string)}` : ''}!`
       }
     }
   })
