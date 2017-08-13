@@ -1,2 +1,4 @@
 node_modules
 *.query
+coverage
+.DS_Store

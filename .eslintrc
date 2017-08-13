@@ -1,6 +1,8 @@
 {
   "env": {
     "node": true,
+    "jest": true,
+    "jasmine": true
   },
   "globals": {
     "assert": false

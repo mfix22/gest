@@ -1,4 +1,4 @@
-/* global describe, test, expect, gest */
+/* global gest */
 const Gest = require('../src/index')
 const schema = require('./_schema') // test fixture
 const UTIL = require('../src/util')

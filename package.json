@@ -21,8 +21,9 @@
     "jest": "^19.0.2"
   },
   "scripts": {
-    "lint": "eslint ./",
+    "lint": "eslint src bin test",
     "test": "npm run lint && NODE_ENV=test jest",
+    "coverage": "npm run test -- --coverage --silent",
     "start": "node ./bin/gest"
   },
   "author": "Michael Fix <@mfix22>",
@@ -47,6 +48,9 @@
     "url": "https://github.com/mfix22/graphicli/issues"
   },
   "homepage": "https://github.com/mfix22/graphicli#readme",
+  "jest": {
+    "collectCoverageFrom": ["src/**/*.{js}"]
+  },
   "gest": {
     "schema": "./test/_schema.js"
   }
