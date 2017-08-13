@@ -1,4 +1,4 @@
-# <img src='https://raw.githubusercontent.com/mfix22/graphicli/master/logo/logo.png' height='80px' alt='Gest - A sensible GraphQL testing CLI and tool.'>
+# <img src='https://raw.githubusercontent.com/mfix22/graphicli/master/media/logo.png' height='80px' alt='Gest - A sensible GraphQL testing CLI and tool.'>
 #### A sensible GraphQL testing CLI and tool.
 
 ## Usage

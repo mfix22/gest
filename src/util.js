@@ -9,12 +9,12 @@ exports.encode = query => ({
   query: query.replace(/\s+/ig, ' ').replace(/"/ig, `\\"`).trim().toString()
 })
 
-exports.readFile = (path) =>
+exports.readFile = path =>
   new Promise((resolve, reject) =>
     fs.readFile(path, 'utf8', (err, data) =>
       err ? reject(err) : resolve(data)))
 
-exports.checkPath = (path) =>
+exports.checkPath = path =>
   new Promise((resolve, reject) =>
     fs.stat(path, (err, stats) =>
       err ? reject(err) : resolve(path)))
@@ -67,7 +67,7 @@ exports.colorResponse = (res) => {
   return out.join('\n')
 }
 
-exports.colorizeGraphQL = (message) =>
+exports.colorizeGraphQL = message =>
   message.replace(/type/g, chalk.dim.gray('$&'))
          .replace(/\w+:/g, chalk.bold.yellow('$&'))
          .replace(/\s+\w+/g, chalk.cyan('$&'))
@@ -99,12 +99,12 @@ exports.findFiles = function (regex = /.*.(query|graphql|gql)$/i) {
 
   const readDir = (name) =>
     new Promise((resolve, reject) =>
-      fs.readdir(name, (err, files) =>
-        err ? reject(err) : resolve(Promise.all(
-          files.map(check.bind(null, name))
-        )))).then(values =>
-          values.reduce((x, y) => x.concat(y), [])
-                .filter(value => value))
+      fs.readdir(name, (err, files) => err
+        ? reject(err)
+        : resolve(Promise.all(files.map(check.bind(null, name))))))
+      .then(values =>
+        [].concat(...values)
+          .filter(i => i))
 
   return readDir(process.cwd())
 }

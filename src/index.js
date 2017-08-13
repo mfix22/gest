@@ -17,19 +17,20 @@ const DEFAULT = {
 function Gest (schema, config) {
   const { baseURL, headers, timeout, globals, verbose } = Object.assign(DEFAULT, config) // default config
 
+  const instance = axios.create({
+    timeout,
+    headers
+  })
+
   const gest = (query) => {
     if (baseURL) {
-      const instance = axios.create({
-        timeout,
-        headers
-      })
-
       const corrected = correctURL(baseURL)
       if (verbose) console.log(`${query} -> ${corrected}`)
 
-      return instance.post(corrected, encode(query))
-                     .then(res => res.data)
-                     .catch(e => e.response.data)
+      return instance
+        .post(corrected, encode(query))
+        .then(res => res.data)
+        .catch(e => e.response.data)
     }
 
     if (verbose) console.log(query)
