@@ -54,7 +54,8 @@ try {
   if (flags.all) {
     findFiles()
       .then(values => {
-        console.log(`${chalk.black.bgYellow(' RUNS ')} ${values.map(v => `${chalk.dim(v.replace(process.cwd(), '.'))}`).join(' ')}\n`)
+        console.log(`${chalk.black.bgYellow(' RUNS ')} ${values.map(v =>
+          `${chalk.dim(v.replace(process.cwd(), '.'))}`).join(' ')}\n`)
         return values
       })
       .then(values =>
@@ -87,7 +88,7 @@ try {
           .then(message => console.log(`\n${message}\n`))
           .catch(console.log))
     } else {
-      // REPL
+      // Open REPL
       REPL(schema, options)
     }
   }
