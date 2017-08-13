@@ -29,7 +29,12 @@ args
   .option(['B', 'baseUrl'], 'Base URL for sending HTTP requests')
   .option(['A', 'all'], 'Run `gest` for all *.(gql|graphql|query) files')
 
-const flags = args.parse(process.argv)
+const flags = args.parse(process.argv, {
+  value: '[query]',
+  mainColor: ['magenta', 'bold'], // following the GraphQL brand
+  usageFilter: info => info.replace('[command] ', '')
+})
+
 try {
   let schema
   const options = Object.assign({ schema: 'schema.js' }, getPackageInfo(), flagsToOptions(flags))

@@ -85,10 +85,10 @@ function REPL (schema, options) {
       if (query.trim() === '') return prompt('> ') // §
 
       return gest(schema, options)(query)
-              .then(colorResponse)
-              .then(message => console.log(`\n${message}\n`))
-              .catch(console.log)
-              .then(() => prompt('> '))
+        .then(colorResponse)
+        .then(message => console.log(`\n${message}\n`))
+        .catch(console.log)
+        .then(() => prompt('> '))
     })
   }
 

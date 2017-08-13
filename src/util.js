@@ -67,11 +67,11 @@ exports.colorResponse = (res) => {
   return out.join('\n')
 }
 
-exports.colorizeGraphQL = message =>
-  message.replace(/type/g, chalk.dim.gray('$&'))
-         .replace(/\w+:/g, chalk.bold.yellow('$&'))
-         .replace(/\s+\w+/g, chalk.cyan('$&'))
-         .replace(/(Query|Mutation)/g, chalk.white('$&'))
+exports.colorizeGraphQL = message => message
+  .replace(/type/g, chalk.dim.gray('$&'))
+  .replace(/\w+:/g, chalk.bold.yellow('$&'))
+  .replace(/\s+\w+/g, chalk.cyan('$&'))
+  .replace(/(Query|Mutation)/g, chalk.white('$&'))
 
 exports.errorMessage = (e) => {
   switch (e.code) {
