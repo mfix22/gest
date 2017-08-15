@@ -1,6 +1,8 @@
 # <img src='https://raw.githubusercontent.com/mfix22/graphicli/master/media/logo.png' height='80px' alt='Gest - A sensible GraphQL testing CLI and tool.'>
 #### A sensible GraphQL testing CLI and tool.
 
+[![tested with jest](https://img.shields.io/badge/tested_with-jest-99424f.svg)](https://github.com/facebook/jest)
+
 ## Usage
 ```bash
 $ npm install -g graphicli
