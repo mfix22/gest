@@ -1,0 +1,42 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`gest { _test } 1`] = `
+"
+Errors
+- Cannot query field \\"_test\\" on type \\"Query\\". Did you mean \\"test\\"?
+"
+`;
+
+exports[`gest { test } 1`] = `
+"
+{
+  \\"data\\": {
+    \\"test\\": \\"success!\\"
+  }
+}
+"
+`;
+
+exports[`gest --inspect 1`] = `
+"
+type Mutation {
+  test(string: String): String
+}
+
+type Query {
+  test: String
+}
+"
+`;
+
+exports[`gest -I 1`] = `
+"
+type Mutation {
+  test(string: String): String
+}
+
+type Query {
+  test: String
+}
+"
+`;
