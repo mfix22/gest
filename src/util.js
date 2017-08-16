@@ -33,7 +33,7 @@ const pullHeaders = (header) => {
 }
 
 // JSON.parse(JSON.stringify(obj)) removes undefined keys
-exports.flagsToOptions = ({baseUrl, schema, header}) =>
+exports.flagsToOptions = ({baseUrl, schema, header} = {}) =>
   JSON.parse(JSON.stringify({
     baseURL: Array.isArray(baseUrl) ? baseUrl[0] : baseUrl,
     schema: Array.isArray(schema) ? schema[0] : schema,

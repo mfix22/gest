@@ -1,7 +1,7 @@
 /* global gest */
 const Gest = require('../src/index')
 const schema = require('./_schema') // test fixture
-const UTIL = require('../src/util')
+const util = require('../src/util')
 
 Gest(schema) // sets Global `gest`
 
@@ -32,7 +32,7 @@ describe('LOCAL', () => {
   })
 })
 
-describe('UTIL', () => {
+describe('util', () => {
   test('encode()', () => {
     const query = `
       {
@@ -41,7 +41,7 @@ describe('UTIL', () => {
         }
       }
     `
-    expect(UTIL.encode(query)).toMatchObject({ query: '{ test(password: \\"password\\") { id } }' })
+    expect(util.encode(query)).toMatchObject({ query: '{ test(password: \\"password\\") { id } }' })
   })
   test('flagsToOptions()', () => {
     const headers = ['key=value', 'key2=value2']
@@ -52,7 +52,7 @@ describe('UTIL', () => {
       header: headers
     }
 
-    expect(UTIL.flagsToOptions(options)).toEqual({
+    expect(util.flagsToOptions(options)).toEqual({
       baseURL: 'url',
       headers: {
         key: 'value',
@@ -61,11 +61,14 @@ describe('UTIL', () => {
     })
 
     const header = 'key=value'
-    expect(UTIL.flagsToOptions({ header })).toEqual({
+    expect(util.flagsToOptions({ header })).toEqual({
       headers: {
         key: 'value'
       }
     })
+
+    expect(util.flagsToOptions({})).toEqual({})
+    expect(util.flagsToOptions()).toEqual({})
   })
   test('correctURL()', () => {
     const url1 = 'test.com'
@@ -73,9 +76,31 @@ describe('UTIL', () => {
     const url3 = 'test.com/test'
     const localUrl = 'localhost:8080'
 
-    expect(UTIL.correctURL(url1)).toEqual('https://test.com')
-    expect(UTIL.correctURL(url2)).toEqual('http://test.com')
-    expect(UTIL.correctURL(url3)).toEqual('https://test.com/test')
-    expect(UTIL.correctURL(localUrl)).toEqual('localhost:8080')
+    expect(util.correctURL(url1)).toEqual('https://test.com')
+    expect(util.correctURL(url2)).toEqual('http://test.com')
+    expect(util.correctURL(url3)).toEqual('https://test.com/test')
+    expect(util.correctURL(localUrl)).toEqual('localhost:8080')
+    expect(() => util.correctURL('bleh')).toThrow()
+  })
+  test('errorMessage', () => {
+    expect(util.errorMessage({ error: 'error' })).toEqual({ error: 'error' })
+    expect(util.errorMessage({ error: 'error', code: 'MODULE_NOT_FOUND' })).toMatchSnapshot()
+  })
+  test('colorizeGraphQL', () => {
+    const message = `
+      type User {
+        id: String
+      }
+    `
+    expect(util.colorizeGraphQL(message)).toMatchSnapshot()
+  })
+  test('colorResponse', () => {
+    const testCases = [
+      { data: { message: 'success' } },
+      { data: { message: 'success' }, errors: [{ message: 'failure' }] },
+      { errors: [{ message: 'failure' }] }
+    ].map(util.colorResponse)
+
+    testCases.forEach(res => expect(res).toMatchSnapshot())
   })
 })

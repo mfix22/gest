@@ -1,0 +1,40 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`util colorResponse 1`] = `
+"{
+  \\"[32m[1mdata[22m[39m\\": {
+    \\"message\\": \\"success\\"
+  }
+}"
+`;
+
+exports[`util colorResponse 2`] = `
+"{
+  \\"[32m[1mdata[22m[39m\\": {
+    \\"message\\": \\"success\\"
+  }
+}
+
+[31m[1m[4mErrors[24m[22m[39m
+[2m-[22m failure"
+`;
+
+exports[`util colorResponse 3`] = `
+"[31m[1m[4mErrors[24m[22m[39m
+[2m-[22m failure"
+`;
+
+exports[`util colorizeGraphQL 1`] = `
+"
+      [2m[90mtype[39m[22m[36m User[39m {
+        [1m[33mid:[39m[22m[36m String[39m
+      }
+    "
+`;
+
+exports[`util errorMessage 1`] = `
+"
+Schema not found. Trying running \`[33m[1mgest --schema ./path/to/schema.js[22m[39m\`
+or with \`schema.js\` in the current working directory.
+"
+`;
