@@ -1,4 +1,4 @@
-# <img src='https://raw.githubusercontent.com/mfix22/graphicli/master/media/logo.png' height='80px' alt='Gest - A sensible GraphQL testing CLI and tool.'>
+# <img src='https://raw.githubusercontent.com/mfix22/gest/master/media/logo.png' height='80px' alt='Gest - A sensible GraphQL testing CLI and tool.'>
 #### A sensible GraphQL testing CLI and tool.
 
 [![tested with jest](https://img.shields.io/badge/tested_with-jest-99424f.svg)](https://github.com/facebook/jest)
@@ -149,8 +149,8 @@ You can configure the `gest` runtime by adding a `gest` key to your `package.jso
 - :+1:  _Helpful_ error messages!
 
 ##### Drawbacks
-- :-1:  No query autocompletion ([yet](https://github.com/mfix22/graphicli/issues/1))
-- :-1:  No multi-line input without using separate files ([so far](https://github.com/mfix22/graphicli/issues/2))
+- :-1:  No query autocompletion ([yet](https://github.com/mfix22/gest/issues/1))
+- :-1:  No multi-line input without using separate files ([so far](https://github.com/mfix22/gest/issues/2))
 
 ## Contributing
 1. [Fork](https://help.github.com/articles/fork-a-repo/) this repository to your own GitHub account and then [clone](https://help.github.com/articles/cloning-a-repository/) it locally
@@ -159,7 +159,7 @@ You can configure the `gest` runtime by adding a `gest` key to your `package.jso
 4. Before submitting a pull request, run `npm test`
 
 ## Need help?
-Running `gest help` will show you all the `gest` options. If you have any other concerns, [post an issue!](https://github.com/mfix22/graphicli/issues)
+Running `gest help` will show you all the `gest` options. If you have any other concerns, [post an issue!](https://github.com/mfix22/gest/issues)
 
 ## Logo
 The official `gest` logo is designed by [`@jakedex`](https://github.com/jakedex)

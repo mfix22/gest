@@ -35,7 +35,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mfix22/graphicli.git"
+    "url": "git+https://github.com/mfix22/gest.git"
   },
   "keywords": [
     "cli",
@@ -47,9 +47,9 @@
     "graphicli"
   ],
   "bugs": {
-    "url": "https://github.com/mfix22/graphicli/issues"
+    "url": "https://github.com/mfix22/gest/issues"
   },
-  "homepage": "https://github.com/mfix22/graphicli#readme",
+  "homepage": "https://github.com/mfix22/gest#readme",
   "jest": {
     "collectCoverageFrom": [
       "src/**/*.{js}"
