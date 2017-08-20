@@ -5,6 +5,7 @@ const path = require('path')
 // Packages
 const args = require('args')
 const chalk = require('chalk')
+const ora = require('ora')
 
 // Ours
 const gest = require('../src/index')
@@ -15,7 +16,7 @@ const {
   flagsToOptions,
   colorResponse,
   colorizeGraphQL,
-  findFiles,
+  readDir,
   errorMessage
 } = require('../src/util')
 
@@ -30,7 +31,7 @@ args
   .option(['A', 'all'], 'Run `gest` for all *.(gql|graphql|query) files')
 
 const flags = args.parse(process.argv, {
-  value: '[query]',
+  value: '[query | queryPath]',
   mainColor: ['magenta', 'bold'], // following the GraphQL brand
   usageFilter: info => info.replace('[command] ', '')
 })
@@ -52,29 +53,32 @@ try {
   }
 
   if (flags.all) {
-    findFiles()
+    readDir(process.cwd(), /.*\.(query|graphql|gql)$/i)
       .then(values => {
-        console.log(`${chalk.black.bgYellow(' RUNS ')} ${values.map(v =>
-          `${chalk.dim(v.replace(process.cwd(), '.'))}`).join(' ')}\n`)
+        if (!values.length) {
+          console.log(`\n${chalk.yellow('Warning')}: no files matching *.(graphql|gql|query) were found`);
+        } else {
+          console.log();
+        }
         return values
       })
       .then(values =>
         Promise.all(values.map(v => {
-          const rep = chalk.dim(v.replace(process.cwd(), '.'))
+          const paths = v.replace(process.cwd(), '.').split('/')
+          const fileName = paths.pop()
+          const rep = paths.map(i => chalk.dim(i)).join('/') + chalk.dim('/') + fileName
+          const spinner = ora({ text: rep, color: 'magenta' }).start()
           return readFile(v)
             .then(gest(schema, Object.assign(options, { verbose: false })))
             .then(value => {
-              if (value.errors && value.data) console.log(`${chalk.black.bgYellow(' WARNING ')} ${rep}`)
-              else if (value.errors) console.log(`${chalk.black.bgRed(' FAIL ')} ${rep}`)
-              else console.log(`${chalk.black.bgGreen(' PASS ')} ${rep}`)
+              if (value.errors && value.data) spinner.warn()
+              else if (value.errors) spinner.fail(`${rep}\n    -  ${value.errors}`)
+              else spinner.succeed()
               return [rep, value.errors]
             })
             .catch(console.log)
         })))
-      .then(values =>
-        values.map(([rep, errors]) =>
-          (errors ? `\n${chalk.dim.red(rep)}: ${errors}\n` : '')).join(''))
-      .then(console.log)
+      .then(() => console.log())
       .catch(console.log)
   } else {
     // DEFAULT COMMAND

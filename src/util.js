@@ -83,28 +83,28 @@ or with \`schema.js\` in the current working directory.
   }
 }
 
-exports.findFiles = function (regex = /.*.(query|graphql|gql)$/i) {
-  const check = (name, file) => {
-    const newFile = path.join(name, file)
-    if (file === 'node_modules' || file === '.git') return
-    return new Promise((resolve, reject) => {
-      fs.stat(newFile, (err, stats) => {
-        if (err) return reject(err)
-        if (stats && stats.isDirectory()) return resolve(readDir(newFile))
-        if (regex.exec(newFile)) return resolve(newFile)
-        return resolve()
-      })
+const checkFileName = (name, regex, file) => {
+  const newFile = path.join(name, file)
+  if (file === 'node_modules' || file === '.git') return
+  return new Promise((resolve, reject) => {
+    fs.stat(newFile, (err, stats) => {
+      if (err) return reject(err)
+      if (stats && stats.isDirectory()) return resolve(readDir(newFile, regex))
+      if (regex.test(newFile)) return resolve(newFile)
+      return resolve()
     })
-  }
-
-  const readDir = (name) =>
-    new Promise((resolve, reject) =>
-      fs.readdir(name, (err, files) => err
-        ? reject(err)
-        : resolve(Promise.all(files.map(check.bind(null, name))))))
-      .then(values =>
-        [].concat(...values)
-          .filter(i => i))
-
-  return readDir(process.cwd())
+  })
 }
+
+// regex defaults to empty
+function readDir(dir, regex = /^(?:)$/) {
+  return new Promise((resolve, reject) =>
+    fs.readdir(dir, (err, files) => err
+      ? reject(err)
+      : resolve(Promise.all(files.map(checkFileName.bind(null, dir, regex))))))
+    .then(values =>
+      [].concat(...values)
+        .filter(i => i))
+}
+
+exports.readDir = readDir
