@@ -65,8 +65,9 @@ try {
       .then(values =>
         Promise.all(values.map(v => {
           const paths = v.replace(process.cwd(), '.').split('/')
+          // separate file from rest of path
           const fileName = paths.pop()
-          const rep = paths.map(i => chalk.dim(i)).join('/') + chalk.dim('/') + fileName
+          const rep = chalk.dim(paths.concat('').join('/')).concat(fileName)
           const spinner = ora({ text: rep, color: 'magenta' }).start()
           return readFile(v)
             .then(gest(schema, Object.assign(options, { verbose: false })))
