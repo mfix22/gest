@@ -25,8 +25,8 @@ const GraphQL = getGraphQL()
 
 args
   .option(['S', 'schema'], 'Path to your GraphQL schema')
-  .option(['H', 'header'], 'HTTP request header')
-  .option(['I', 'inspect'], 'Print your GraphQL schema options')
+  .option(['H', 'header'], 'Set HTTP request header')
+  .option(['I', 'inspect'], 'Print your GraphQL schema types')
   .option(['B', 'baseUrl'], 'Base URL for sending HTTP requests')
   .option(['A', 'all'], 'Run `gest` for all *.(gql|graphql|query) files')
 
