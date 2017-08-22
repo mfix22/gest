@@ -56,9 +56,9 @@ try {
     readDir(process.cwd(), /.*\.(query|graphql|gql)$/i)
       .then(values => {
         if (!values.length) {
-          console.log(`\n${chalk.yellow('Warning')}: no files matching *.(graphql|gql|query) were found`);
+          console.log(`\n${chalk.yellow('Warning')}: no files matching *.(graphql|gql|query) were found`)
         } else {
-          console.log();
+          console.log()
         }
         return values
       })
@@ -75,7 +75,7 @@ try {
               if (value.errors && value.data) spinner.warn()
               else if (value.errors) spinner.fail(`${rep}\n    -  ${value.errors}`)
               else spinner.succeed()
-              return [rep, value.errors]
+              return value
             })
             .catch(console.log)
         })))

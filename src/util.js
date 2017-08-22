@@ -97,7 +97,7 @@ const checkFileName = (name, regex, file) => {
 }
 
 // regex defaults to empty
-function readDir(dir, regex = /^(?:)$/) {
+function readDir (dir, regex = /^(?:)$/) {
   return new Promise((resolve, reject) =>
     fs.readdir(dir, (err, files) => err
       ? reject(err)
