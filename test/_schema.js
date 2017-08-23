@@ -1,4 +1,12 @@
-const { GraphQLSchema, GraphQLObjectType, GraphQLString } = require('graphql')
+const {
+  GraphQLSchema,
+  GraphQLObjectType,
+  GraphQLString,
+  GraphQLInt,
+  GraphQLBoolean,
+  GraphQLFloat,
+  GraphQLNonNull
+} = require('graphql')
 
 module.exports = new GraphQLSchema({
   query: new GraphQLObjectType({
@@ -13,12 +21,21 @@ module.exports = new GraphQLSchema({
   mutation: new GraphQLObjectType({
     name: 'Mutation',
     fields: {
-      test: {
+      updateUser: {
         type: GraphQLString,
         args: {
-          string: { type: GraphQLString }
+          email: { type: GraphQLString },
+          phone: { type: GraphQLInt },
+          isValid: { type: GraphQLBoolean }
         },
-        resolve: (root, args) => `success ${args.string ? `with args: ${JSON.stringify(args.string)}` : ''}!`
+        resolve: (root, args) => `success${Object.assign(args).length ? ` with args: ${JSON.stringify(args)}` : ''}!`
+      },
+      setLogLevel: {
+        type: GraphQLFloat,
+        args: {
+          input: { type: new GraphQLNonNull(GraphQLBoolean) }
+        },
+        resolve: (root, args) => `success${Object.assign(args).length ? ` with args: ${JSON.stringify(args)}` : ''}!`
       }
     }
   })
