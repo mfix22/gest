@@ -29,12 +29,21 @@ args
   .option(['I', 'inspect'], 'Print your GraphQL schema types')
   .option(['B', 'baseUrl'], 'Base URL for sending HTTP requests')
   .option(['A', 'all'], 'Run `gest` for all *.(gql|graphql|query) files')
+  .option(['P', 'print'], 'Pretty print the GraphQL query')
 
 const flags = args.parse(process.argv, {
   value: '[query | queryPath]',
   mainColor: ['magenta', 'bold'], // following the GraphQL brand
   usageFilter: info => info.replace('[command] ', '')
 })
+
+const getQueryString = q => checkPath(path.join(process.cwd(), q))
+  .then(readFile)
+  .catch(() => q)
+
+const wrapLogging = p => p
+  .then(message => console.log(`\n${message}`))
+  .catch(console.log)
 
 try {
   let schema
@@ -82,16 +91,19 @@ try {
       .then(() => console.log())
       .catch(console.log)
   } else {
-    // DEFAULT COMMAND
     if (args.sub && args.sub.length) {
-      args.sub.map(q =>
-        checkPath(path.join(process.cwd(), q))
-          .then(readFile)
-          .catch(() => q)
-          .then(gest(schema, options))
-          .then(colorResponse)
-          .then(message => console.log(`\n${message}\n`))
-          .catch(console.log))
+      if (flags.print) {
+        const q = args.sub[0] // only print first value
+        wrapLogging(getQueryString(q)
+          .then(GraphQL.parse)
+          .then(GraphQL.print))
+      } else {
+        args.sub.map(q =>
+          wrapLogging(getQueryString(q)
+            .then(gest(schema, options))
+            .then(colorResponse)
+            .then(message => `${message}\n`)))
+      }
     } else {
       // Open REPL
       REPL(schema, options)

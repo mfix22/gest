@@ -27,7 +27,7 @@ exports[`util colorResponse 3`] = `
 exports[`util colorizeGraphQL 1`] = `
 "
       [2m[90mtype[39m[22m[36m User[39m {
-        [1m[33mid:[39m[22m[36m String[39m
+        [1m[35mid[37m:[39m[39m[22m[36m String[39m
       }
     "
 `;
