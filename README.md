@@ -2,7 +2,7 @@
 #### A sensible GraphQL testing CLI and tool.
 
 [![tested with jest](https://img.shields.io/badge/tested_with-jest-99424f.svg)](https://github.com/facebook/jest)
-
+[![tested with gest](https://img.shields.io/badge/tested_with-gest-e00098.svg)](https://github.com/mfix22/gest)
 ## Usage
 ```bash
 $ npm install -g graphicli
