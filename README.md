@@ -109,6 +109,20 @@ simply print if each query succeeded without errors
 ##### `--inspect (-I)`
 For convenience, running `gest --inspect` or `gest -I` will print your GraphQL schema
 
+##### `--print (-P)`
+Pretty print your GraphQL queries (without using GraphiQL!)
+```bash
+$ gest [query | pathToQuery] --print
+```
+###### Example
+```bash
+$ gest '{test}' --print
+
+{
+  test
+}
+```
+
 ##### `--schema (-S)`
 You can specify the path to your GraphQL schema with `gest --schema ./path/to/schema.js`
 
