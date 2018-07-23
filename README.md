@@ -20,9 +20,9 @@ $ gest '{ test }'
 ```
 or
 ```bash
-$ gest test.query
+$ gest test.graphql
 
-# with `test.query` containing
+# with `test.graphql` containing
 {
   test
 }
@@ -30,7 +30,7 @@ $ gest test.query
 
 or multiple
 ```bash
-$ gest test.query '{ test }' introspection.query
+$ gest test.graphql '{ test }' introspection.graphql
 # will run all three queries!
 ```
 
