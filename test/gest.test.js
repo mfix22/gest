@@ -75,11 +75,13 @@ describe('util', () => {
     const url2 = 'http://test.com'
     const url3 = 'test.com/test'
     const localUrl = 'localhost:8080'
+    const dockerEndpoint = 'http://api/graphql'
 
     expect(util.correctURL(url1)).toEqual('https://test.com')
     expect(util.correctURL(url2)).toEqual('http://test.com')
     expect(util.correctURL(url3)).toEqual('https://test.com/test')
     expect(util.correctURL(localUrl)).toEqual('localhost:8080')
+    expect(util.correctURL(dockerEndpoint)).toEqual('http://api/graphql')
     expect(() => util.correctURL('bleh')).toThrow()
   })
   test('errorMessage', () => {

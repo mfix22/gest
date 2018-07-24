@@ -41,9 +41,10 @@ exports.flagsToOptions = ({baseUrl, schema, header} = {}) =>
   }))
 
 exports.correctURL = (url) => {
-  if (/(https?:\/\/)[\w-]+(\.[a-z-]+)+\.?(:\d+)?(\/\S*)?/i.test(url)) return url
-  if (/[\w-]+(\.[a-z-]+)+\.?(:\d+)?(\/\S*)?/i.test(url)) return `https://${url}`
-  if (/(http:\/\/)?localhost:\d\d\d\d/i.test(url)) return url
+  // TODO update this to use `rexrex`
+  if (/(http:\/\/)?localhost:\d{2,4}/i.test(url)) return url
+  if (/(https?:\/\/)[.\w-]+(:\d{2,4})?(\/\S*)?/i.test(url)) return url
+  if (/\w+[/.][.\w-]*?(:\d{2,4})?(\/\S*)?/i.test(url)) return `https://${url}`
   throw new Error('Your `baseURL` must be a valid URL.')
 }
 
