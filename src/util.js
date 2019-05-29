@@ -97,7 +97,7 @@ or with \`schema.js\` in the current working directory.
 }
 
 const checkFileName = (name, regex, file) => {
-  const newFile = path.join(name, file)
+  const newFile = path.resolve(name, file)
   if (file === 'node_modules' || file === '.git') return
   return new Promise((resolve, reject) => {
     fs.stat(newFile, (err, stats) => {

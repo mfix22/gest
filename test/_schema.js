@@ -28,14 +28,16 @@ module.exports = new GraphQLSchema({
           phone: { type: GraphQLInt },
           isValid: { type: GraphQLBoolean }
         },
-        resolve: (root, args) => `success${Object.assign(args).length ? ` with args: ${JSON.stringify(args)}` : ''}!`
+        resolve: (root, args) =>
+          `success${Object.assign(args).length ? ` with args: ${JSON.stringify(args)}` : ''}!`
       },
       setLogLevel: {
         type: GraphQLFloat,
         args: {
           input: { type: new GraphQLNonNull(GraphQLBoolean) }
         },
-        resolve: (root, args) => `success${Object.assign(args).length ? ` with args: ${JSON.stringify(args)}` : ''}!`
+        resolve: (root, args) =>
+          `success${Object.assign(args).length ? ` with args: ${JSON.stringify(args)}` : ''}!`
       }
     }
   })

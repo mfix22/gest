@@ -38,7 +38,7 @@ const flags = args.parse(process.argv, {
 })
 
 const getQueryString = q =>
-  checkPath(path.join(process.cwd(), q))
+  checkPath(path.resolve(process.cwd(), q))
     .then(readFile)
     .catch(() => q)
 
@@ -49,7 +49,7 @@ try {
   const options = Object.assign({ schema: 'schema.js' }, getPackageInfo(), flagsToOptions(flags))
 
   try {
-    schema = require(path.join(process.cwd(), options.schema))
+    schema = require(path.resolve(process.cwd(), options.schema))
   } catch (e) {
     // schema is required unless sending over HTTP
     if (!options.baseURL) throw e

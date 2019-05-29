@@ -6,11 +6,14 @@ const util = require('../src/util')
 Gest(schema) // sets Global `gest`
 
 describe('GLOBAL', () => {
-  gest('test global gest', `
+  gest(
+    'test global gest',
+    `
     {
       test
     }
-  `)
+  `
+  )
 })
 
 describe('LOCAL', () => {
