@@ -15,7 +15,7 @@ const DEFAULT = {
 }
 
 function Gest(schema, config) {
-  const { baseURL, headers, timeout, globals, verbose } = Object.assign(DEFAULT, config) // default config
+  const { baseURL, headers, timeout, globals, verbose } = Object.assign({}, DEFAULT, config) // default config
 
   const instance = axios.create({
     timeout,
@@ -30,7 +30,12 @@ function Gest(schema, config) {
       return instance
         .post(corrected, encode(query))
         .then(res => res.data)
-        .catch(e => e.response.data)
+        .catch(e => {
+          if (e.response) {
+            return e.response.data
+          }
+          return e
+        })
     }
 
     if (verbose) console.log(query)
