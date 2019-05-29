@@ -5,7 +5,7 @@ const readline = require('readline')
 const gest = require('./index')
 const { colorResponse } = require('./util')
 
-function REPL (schema, options) {
+function REPL(schema, options) {
   const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout
@@ -14,7 +14,7 @@ function REPL (schema, options) {
   rl.on('SIGINT', () => rl.close())
   rl.on('SIGTSTP', () => rl.close())
 
-  function resetReplState () {
+  function resetReplState() {
     return {
       midCommandFlag: false,
       numRemainingParens: 0,
@@ -22,7 +22,7 @@ function REPL (schema, options) {
     }
   }
 
-  function processQuery (query) {
+  function processQuery(query) {
     let numLeft = 0
     let numRight = 0
 
@@ -39,7 +39,7 @@ function REPL (schema, options) {
     return { numRight, numLeft }
   }
 
-  function isEscaped (string, index) {
+  function isEscaped(string, index) {
     let count = 0
     let curr = index - 1
 
@@ -53,7 +53,7 @@ function REPL (schema, options) {
 
   let replState = resetReplState()
 
-  function prompt (ask) {
+  function prompt(ask) {
     rl.question(ask, query => {
       if (query.toLowerCase().trim() === 'quit') return rl.close()
 

@@ -14,7 +14,9 @@ try {
 
 try {
   packageInfo = require(path.join(process.cwd(), 'package.json')).gest
-} catch (e) {}
+} catch (e) {
+  // pass
+}
 
 exports.getGraphQL = () => GraphQL
 exports.getPackageInfo = () => packageInfo

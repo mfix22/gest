@@ -1,15 +1,17 @@
 {
+  "parser": "babel-eslint",
   "env": {
+    "browser": true,
+    "es6": true,
     "node": true,
-    "jest": true,
-    "jasmine": true
+    "jest": true
   },
-  "globals": {
-    "assert": false
-  },
-  "extends": [
-    "standard"
-  ],
+  "extends": ["eslint:recommended"],
+  "plugins": ["import"],
   "rules": {
+    "import/no-unresolved": "error",
+    "no-duplicate-imports": "error",
+    "react/prop-types": "off",
+    "no-console": "warn"
   }
 }

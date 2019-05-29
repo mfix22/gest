@@ -37,13 +37,12 @@ const flags = args.parse(process.argv, {
   usageFilter: info => info.replace('[command] ', '')
 })
 
-const getQueryString = q => checkPath(path.join(process.cwd(), q))
-  .then(readFile)
-  .catch(() => q)
+const getQueryString = q =>
+  checkPath(path.join(process.cwd(), q))
+    .then(readFile)
+    .catch(() => q)
 
-const wrapLogging = p => p
-  .then(message => console.log(`\n${message}`))
-  .catch(console.log)
+const wrapLogging = p => p.then(message => console.log(`\n${message}`)).catch(console.log)
 
 try {
   let schema
@@ -65,44 +64,54 @@ try {
     readDir(process.cwd(), /.*\.(query|graphql|gql)$/i)
       .then(values => {
         if (!values.length) {
-          console.log(`\n${chalk.yellow('Warning')}: no files matching *.(graphql|gql|query) were found`)
+          console.log(
+            `\n${chalk.yellow('Warning')}: no files matching *.(graphql|gql|query) were found`
+          )
         } else {
           console.log()
         }
         return values
       })
       .then(values =>
-        Promise.all(values.map(v => {
-          const paths = v.replace(process.cwd(), '.').split('/')
-          // separate file from rest of path
-          const fileName = paths.pop()
-          const rep = chalk.dim(paths.concat('').join('/')).concat(fileName)
-          const spinner = ora({ text: rep, color: 'magenta' }).start()
-          return readFile(v)
-            .then(gest(schema, Object.assign(options, { verbose: false })))
-            .then(value => {
-              if (value.errors && value.data) spinner.warn()
-              else if (value.errors) spinner.fail(`${rep}\n    -  ${value.errors}`)
-              else spinner.succeed()
-              return value
-            })
-            .catch(console.log)
-        })))
+        Promise.all(
+          values.map(v => {
+            const paths = v.replace(process.cwd(), '.').split('/')
+            // separate file from rest of path
+            const fileName = paths.pop()
+            const rep = chalk.dim(paths.concat('').join('/')).concat(fileName)
+            const spinner = ora({ text: rep, color: 'magenta' }).start()
+            return readFile(v)
+              .then(gest(schema, Object.assign(options, { verbose: false })))
+              .then(value => {
+                if (value.errors && value.data) spinner.warn()
+                else if (value.errors) spinner.fail(`${rep}\n    -  ${value.errors}`)
+                else spinner.succeed()
+                return value
+              })
+              .catch(console.log)
+          })
+        )
+      )
       .then(() => console.log())
       .catch(console.log)
   } else {
     if (args.sub && args.sub.length) {
       if (flags.print) {
         const q = args.sub[0] // only print first value
-        wrapLogging(getQueryString(q)
-          .then(GraphQL.parse)
-          .then(GraphQL.print))
+        wrapLogging(
+          getQueryString(q)
+            .then(GraphQL.parse)
+            .then(GraphQL.print)
+        )
       } else {
         args.sub.map(q =>
-          wrapLogging(getQueryString(q)
-            .then(gest(schema, options))
-            .then(colorResponse)
-            .then(message => `${message}\n`)))
+          wrapLogging(
+            getQueryString(q)
+              .then(gest(schema, options))
+              .then(colorResponse)
+              .then(message => `${message}\n`)
+          )
+        )
       }
     } else {
       // Open REPL

@@ -14,7 +14,7 @@ const DEFAULT = {
   verbose: ENV === 'dev' || ENV === 'development'
 }
 
-function Gest (schema, config) {
+function Gest(schema, config) {
   const { baseURL, headers, timeout, globals, verbose } = Object.assign(DEFAULT, config) // default config
 
   const instance = axios.create({
@@ -22,7 +22,7 @@ function Gest (schema, config) {
     headers
   })
 
-  const gest = (query) => {
+  const gest = query => {
     if (baseURL) {
       const corrected = correctURL(baseURL)
       if (verbose) console.log(`${query} -> ${corrected}`)
