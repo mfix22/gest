@@ -81,7 +81,7 @@ try {
             const rep = chalk.dim(paths.concat('').join('/')).concat(fileName)
             const spinner = ora({ text: rep, color: 'magenta' }).start()
             return readFile(v)
-              .then(gest(schema, Object.assign(options, { verbose: false })))
+              .then(gest(schema, Object.assign(options, { debug: false })))
               .then(value => {
                 if (value.errors && value.data) spinner.warn()
                 else if (value.errors) spinner.fail(`${rep}\n    -  ${value.errors}`)

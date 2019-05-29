@@ -11,11 +11,11 @@ const DEFAULT = {
   timeout: 10000,
   headers: {},
   globals: ENV === 'test' && (global.test !== undefined || global.it !== undefined),
-  verbose: ENV === 'dev' || ENV === 'development'
+  debug: ENV === 'debug'
 }
 
 function Gest(schema, config) {
-  const { baseURL, headers, timeout, globals, verbose } = Object.assign({}, DEFAULT, config) // default config
+  const { baseURL, headers, timeout, globals, debug } = Object.assign({}, DEFAULT, config) // default config
 
   const instance = axios.create({
     timeout,
@@ -25,7 +25,7 @@ function Gest(schema, config) {
   const gest = query => {
     if (baseURL) {
       const corrected = correctURL(baseURL)
-      if (verbose) console.log(`${query} -> ${corrected}`)
+      if (debug) console.log(`${query} -> ${corrected}`)
 
       return instance
         .post(corrected, encode(query))
@@ -38,7 +38,7 @@ function Gest(schema, config) {
         })
     }
 
-    if (verbose) console.log(query)
+    if (debug) console.log(query)
     return graphql(schema, query, null, { headers })
   }
 
