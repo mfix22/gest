@@ -164,7 +164,6 @@ You can configure the `gest` runtime by adding a `gest` key to your `package.jso
 
 ##### Drawbacks
 - :-1:  No query autocompletion ([yet](https://github.com/mfix22/gest/issues/1))
-- :-1:  No multi-line input without using separate files ([so far](https://github.com/mfix22/gest/issues/2))
 
 ## Contributing
 1. [Fork](https://help.github.com/articles/fork-a-repo/) this repository to your own GitHub account and then [clone](https://help.github.com/articles/cloning-a-repository/) it locally
