@@ -95,24 +95,23 @@ try {
       .then(() => console.log())
       .catch(console.log)
   } else {
+    if (flags.print) {
+      const q = args.sub[0] || flags.print
+      return wrapLogging(
+        getQueryString(q)
+          .then(GraphQL.parse)
+          .then(GraphQL.print)
+      )
+    }
     if (args.sub && args.sub.length) {
-      if (flags.print) {
-        const q = args.sub[0] // only print first value
+      args.sub.map(q =>
         wrapLogging(
           getQueryString(q)
-            .then(GraphQL.parse)
-            .then(GraphQL.print)
+            .then(gest(schema, options))
+            .then(colorResponse)
+            .then(message => `${message}\n`)
         )
-      } else {
-        args.sub.map(q =>
-          wrapLogging(
-            getQueryString(q)
-              .then(gest(schema, options))
-              .then(colorResponse)
-              .then(message => `${message}\n`)
-          )
-        )
-      }
+      )
     } else {
       // Open REPL
       REPL(schema, options)
