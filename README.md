@@ -1,5 +1,15 @@
-# <img src='https://raw.githubusercontent.com/mfix22/gest/master/media/logo.png' height='80px' alt='Gest - A sensible GraphQL testing CLI and tool.'>
-#### A sensible GraphQL testing tool.
+<h1 align="center">
+  <img src='https://raw.githubusercontent.com/mfix22/gest/master/media/logo.png' height='80px' alt='Gest - A sensible GraphQL testing CLI and tool.'>
+</h1>
+<h3 align="center">A sensible GraphQL testing tool.</h3>
+<p  align="center">
+  <a href="https://github.com/facebook/jest">
+    <img src="https://img.shields.io/badge/tested_with-jest-99424f.svg" alt="tested with jest" />
+  </a>
+  <a href="https://github.com/mfix22/gest">
+    <img src="https://img.shields.io/badge/tested_with-gest-e00098.svg" alt="tested with gest" />
+  </a>
+</p>
 
 [![tested with jest](https://img.shields.io/badge/tested_with-jest-99424f.svg)](https://github.com/facebook/jest)
 [![tested with gest](https://img.shields.io/badge/tested_with-gest-e00098.svg)](https://github.com/mfix22/gest)
