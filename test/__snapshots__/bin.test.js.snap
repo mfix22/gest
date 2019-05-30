@@ -1,13 +1,14 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`gest { _test } 1`] = `
+exports[`failures case: { _test } 1`] = `
 "
 [31m[1m[4mErrors[24m[22m[39m
 [2m-[22m Cannot query field \\"_test\\" on type \\"Query\\". [33m[1mDid you mean \\"test\\"[22m[39m?
+
 "
 `;
 
-exports[`gest { test } 1`] = `
+exports[`success cases { test } 1`] = `
 "
 {
   \\"[32m[1mdata[22m[39m\\": {
@@ -17,7 +18,7 @@ exports[`gest { test } 1`] = `
 "
 `;
 
-exports[`gest --inspect 1`] = `
+exports[`success cases --inspect 1`] = `
 "
 [2m[90mtype[39m[22m[36m [37mMutation[39m[39m {[36m
   updateUser[39m([1m[35memail[37m:[39m[39m[22m[36m String[39m, [1m[35mphone[37m:[39m[39m[22m[36m Int[39m, [1m[35misValid[37m:[39m[39m[22m[36m Boolean[39m)[37m:[39m[36m String[39m[36m
@@ -30,7 +31,7 @@ exports[`gest --inspect 1`] = `
 "
 `;
 
-exports[`gest -I 1`] = `
+exports[`success cases -I 1`] = `
 "
 [2m[90mtype[39m[22m[36m [37mMutation[39m[39m {[36m
   updateUser[39m([1m[35memail[37m:[39m[39m[22m[36m String[39m, [1m[35mphone[37m:[39m[39m[22m[36m Int[39m, [1m[35misValid[37m:[39m[39m[22m[36m Boolean[39m)[37m:[39m[36m String[39m[36m
