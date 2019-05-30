@@ -70,13 +70,11 @@ try {
     let oneFailed = false
     readDir(process.cwd(), /.*\.(query|graphql|gql)$/i)
       .then(values => {
-        if (!values.length) {
-          console.log(
-            `\n${chalk.yellow('Warning')}: no files matching *.(graphql|gql|query) were found`
-          )
-        } else {
-          console.log()
-        }
+        console.log(
+          !values.length
+            ? `\n${chalk.yellow('Warning')}: no files matching *.(graphql|gql|query) were found`
+            : ''
+        )
         return values
       })
       .then(values =>
