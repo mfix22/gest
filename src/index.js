@@ -1,35 +1,36 @@
 // Packages
-const axios = require('axios')
+const fetch = require('node-fetch')
 
 // Ours
 const { graphql } = require('./import').getGraphQL()
-const { correctURL, encode } = require('./util')
+const { correctURL } = require('./util')
 
 const ENV = process.env.NODE_ENV
 
 const DEFAULT = {
-  timeout: 10000,
   headers: {},
   globals: ENV === 'test' && (global.test !== undefined || global.it !== undefined),
   debug: ENV === 'debug'
 }
 
 function Gest(schema, config) {
-  const { baseURL, headers, timeout, globals, debug } = Object.assign({}, DEFAULT, config) // default config
-
-  const instance = axios.create({
-    timeout,
-    headers
-  })
+  const { baseURL, headers, globals, debug } = Object.assign({}, DEFAULT, config) // default config
 
   const gest = query => {
     if (baseURL) {
       const corrected = correctURL(baseURL)
+
       if (debug) console.log(`${query} -> ${corrected}`)
 
-      return instance
-        .post(corrected, encode(query))
-        .then(res => res.data)
+      return fetch(corrected, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          ...headers
+        },
+        body: JSON.stringify({ query })
+      })
+        .then(res => res.json())
         .catch(e => {
           if (e.response) {
             return e.response.data
@@ -39,6 +40,7 @@ function Gest(schema, config) {
     }
 
     if (debug) console.log(query)
+
     return graphql(schema, query, null, { headers })
   }
 
