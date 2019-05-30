@@ -57,6 +57,18 @@ function REPL(schema, options) {
     rl.question(ask, query => {
       if (query.toLowerCase().trim() === 'quit') return rl.close()
 
+      if (query.toLowerCase().trim() === 'help') {
+        console.log(
+          [
+            '',
+            'Type your query below and press "Enter" to execute it.',
+            'To exit, type "quit" or use Ctrl+C',
+            ''
+          ].join('\n')
+        )
+        return prompt('> ')
+      }
+
       // handle multiline input
       const { numLeft, numRight } = processQuery(query)
       const numAdditionalRight = numRight - numLeft
