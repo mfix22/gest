@@ -3,7 +3,8 @@ const Gest = require('../src/index')
 const schema = require('./_schema') // test fixture
 const util = require('../src/util')
 
-Gest(schema /* { globals: true } */) // sets Global `gest`
+const initializeGlobals = Gest
+initializeGlobals(schema /* { globals: true } */)
 
 describe('GLOBAL', () => {
   gest(
