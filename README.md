@@ -21,7 +21,7 @@ $ npm install -g graphicli
 then send queries with `gest` (pronounced _guest_ [/ɡest/]).
 
 ```bash
-$ gest [options] [quotedQuery | pathToFileWithQuery]
+$ gest [options] [query | pathToFileWithQuery]
 ```
 
 ##### Examples
@@ -68,7 +68,7 @@ If you specify a `baseURL` in your [`config`](#config), `gest` will send an `POS
 
 You can specify HTTP headers by using `-H key=value` [flags](#flags).
 
-This is especially convenient if you are using a [`now`](https://zeit.co/now) workflow.
+This is especially convenient if you are using a [`Now`](https://zeit.co/now) workflow.
 
 ##### Example
 
@@ -132,7 +132,7 @@ simply print if each query succeeded without errors
 
 ##### `--inspect (-I)`
 
-For convenience, running `gest --inspect` or `gest -I` will print your GraphQL schema
+For convenience, running `gest --inspect` or `gest -I` will pretty print your GraphQL schema
 
 ##### `--print (-P)`
 
@@ -197,6 +197,7 @@ You can configure the `gest` runtime by adding a `gest` key to your `package.jso
 - :+1: Simple unit testing for your schema
 - :+1: Easy regression testing with [`gest --all`](#flags).
 - :+1: Simple integration/deployment testing with [`--baseURL`](#http)
+- :+1: Handy introspection and pretty printing
 - :+1: _Helpful_ error messages!
 
 ##### Drawbacks

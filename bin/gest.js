@@ -26,13 +26,13 @@ const GraphQL = getGraphQL()
 args
   .option(['S', 'schema'], 'Path to your GraphQL schema')
   .option(['H', 'header'], 'Set HTTP request header')
-  .option(['I', 'inspect'], 'Print your GraphQL schema types')
-  .option(['B', 'baseUrl'], 'Base URL for sending HTTP requests')
+  .option(['I', 'inspect'], 'Print your GraphQL schema')
+  .option(['B', 'baseURL', 'baseUrl'], 'Base URL for sending HTTP requests')
   .option(['A', 'all'], 'Run `gest` for all *.(gql|graphql|query) files')
   .option(['P', 'print'], 'Pretty print the GraphQL query')
 
 const flags = args.parse(process.argv, {
-  value: '[query | queryPath]',
+  value: '[query | pathToFileWithQuery]',
   mainColor: ['magenta', 'bold'], // following the GraphQL brand
   usageFilter: info => info.replace('[command] ', '')
 })
@@ -42,7 +42,8 @@ const getQueryString = q =>
     .then(readFile)
     .catch(() => q)
 
-const wrapLogging = p => p.then(message => console.log(`\n${message}`)).catch(console.log)
+const wrapLogging = p =>
+  p.then(message => console.log(`\n${message}`)).catch(e => console.log(e) || process.exit(1))
 
 try {
   let schema
@@ -66,6 +67,7 @@ try {
   }
 
   if (flags.all) {
+    let oneFailed = false
     readDir(process.cwd(), /.*\.(query|graphql|gql)$/i)
       .then(values => {
         if (!values.length) {
@@ -89,8 +91,10 @@ try {
               .then(gest(schema, Object.assign(options, { debug: false })))
               .then(value => {
                 if (value.errors && value.data) spinner.warn()
-                else if (value.errors) spinner.fail(`${rep}\n    -  ${value.errors}`)
-                else spinner.succeed()
+                else if (value.errors) {
+                  spinner.fail(`${rep}\n    -  ${value.errors}`)
+                  oneFailed = true
+                } else spinner.succeed()
                 return value
               })
               .catch(console.log)
@@ -99,6 +103,11 @@ try {
       )
       .then(() => console.log())
       .catch(console.log)
+      .then(() => {
+        if (oneFailed) {
+          process.exit(1)
+        }
+      })
   } else {
     if (flags.print) {
       const q = args.sub[0] || flags.print
@@ -113,8 +122,13 @@ try {
         wrapLogging(
           getQueryString(q)
             .then(gest(schema, options))
-            .then(colorResponse)
-            .then(message => `${message}\n`)
+            .then(res => {
+              const message = colorResponse(res) + '\n'
+              if (res.errors) {
+                throw '\n' + message
+              }
+              return message
+            })
         )
       )
     } else {
