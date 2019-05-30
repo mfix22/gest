@@ -56,8 +56,13 @@ try {
   }
 
   if (flags.inspect) {
-    console.log('\n' + colorizeGraphQL(GraphQL.printSchema(schema)))
-    process.exit()
+    return wrapLogging(
+      gest(schema, options)(GraphQL.introspectionQuery)
+        .then(res => res.data)
+        .then(GraphQL.buildClientSchema)
+        .then(GraphQL.printSchema)
+        .then(colorizeGraphQL)
+    )
   }
 
   if (flags.all) {
