@@ -54,7 +54,7 @@
   "homepage": "https://github.com/mfix22/gest#readme",
   "jest": {
     "collectCoverageFrom": [
-      "src"
+      "src/**/*.js"
     ]
   },
   "gest": {

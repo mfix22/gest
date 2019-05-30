@@ -115,7 +115,7 @@ function readDir(dir, regex = /^(?:)$/) {
     fs.readdir(dir, (err, files) =>
       err ? reject(err) : resolve(Promise.all(files.map(checkFileName.bind(null, dir, regex))))
     )
-  ).then(values => [].concat(...values).filter(i => i))
+  ).then(values => [].concat(...values).filter(Boolean))
 }
 
 exports.readDir = readDir
