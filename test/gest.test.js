@@ -1,4 +1,5 @@
 /* global gest */
+const stripAnsi = require('strip-ansi')
 const Gest = require('../src/index')
 const schema = require('./_schema') // test fixture
 const util = require('../src/util')
@@ -90,7 +91,9 @@ describe('util', () => {
   })
   test('errorMessage', () => {
     expect(util.errorMessage({ error: 'error' })).toEqual({ error: 'error' })
-    expect(util.errorMessage({ error: 'error', code: 'MODULE_NOT_FOUND' })).toMatchSnapshot()
+    expect(
+      stripAnsi(util.errorMessage({ error: 'error', code: 'MODULE_NOT_FOUND' }))
+    ).toMatchSnapshot()
   })
   test('colorizeGraphQL', () => {
     const message = `
@@ -98,7 +101,7 @@ describe('util', () => {
         id: String
       }
     `
-    expect(util.colorizeGraphQL(message)).toMatchSnapshot()
+    expect(stripAnsi(util.colorizeGraphQL(message))).toMatchSnapshot()
   })
   test('colorResponse', () => {
     const testCases = [
@@ -107,6 +110,6 @@ describe('util', () => {
       { errors: [{ message: 'failure' }] }
     ].map(util.colorResponse)
 
-    testCases.forEach(res => expect(res).toMatchSnapshot())
+    testCases.forEach(res => expect(stripAnsi(res)).toMatchSnapshot())
   })
 })
