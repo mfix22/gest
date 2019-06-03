@@ -14,8 +14,7 @@
 ## Usage
 
 ```bash
-$ npm install -g graphicli
-# (Sorry about the package name!)
+$ npm install -g gest
 ```
 
 then send queries with `gest` (pronounced _guest_ [/ɡest/]).
@@ -83,7 +82,7 @@ You can use `gest` as a local module in your unit/integration tests
 ##### Examples
 
 ```javascript
-const Gest = require('graphicli')
+const Gest = require('gest')
 const schema = require('../src/schema')
 
 const gest = Gest(schema, {

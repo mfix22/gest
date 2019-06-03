@@ -1,5 +1,5 @@
 {
-  "name": "graphicli",
+  "name": "gest",
   "version": "1.5.2",
   "description": "GraphQL testing CLI",
   "main": "./src/index.js",
