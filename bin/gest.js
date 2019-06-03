@@ -60,6 +60,17 @@ try {
     return wrapLogging(
       gest(schema, options)(GraphQL.introspectionQuery)
         .then(res => res.data)
+        .then(data => {
+          if (!data || !data.__schema) {
+            const message = `\n${chalk.red.bold('Error')}: ${
+              options.baseURL
+                ? 'The provided URL is not a valid GraphQL endpoint'
+                : 'The provided schema is not a valid GraphQL schema'
+            }\n`
+            throw message
+          }
+          return data
+        })
         .then(GraphQL.buildClientSchema)
         .then(GraphQL.printSchema)
         .then(colorizeGraphQL)

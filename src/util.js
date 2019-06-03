@@ -79,7 +79,7 @@ exports.colorResponse = res => {
 
 exports.colorizeGraphQL = message =>
   message
-    .replace(/type/g, chalk.dim.gray('$&'))
+    .replace(/type/g, chalk.dim('$&'))
     .replace(/\w+:/g, chalk.bold.magenta('$&'))
     .replace(/\s+\w+/g, chalk.cyan('$&'))
     .replace(/(Query|Mutation|:)/g, chalk.white('$&'))
