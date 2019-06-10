@@ -3,6 +3,9 @@
 </h1>
 <h3 align="center">A sensible GraphQL testing tool.</h3>
 <p  align="center">
+   <a href="http://makeapullrequest.com">
+    <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs welcome" />
+  </a>
   <a href="https://github.com/facebook/jest">
     <img src="https://img.shields.io/badge/tested_with-jest-99424f.svg" alt="tested with jest" />
   </a>
