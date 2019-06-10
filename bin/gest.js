@@ -5,7 +5,7 @@ const path = require('path')
 // Packages
 const args = require('args')
 const chalk = require('chalk')
-const ora = require('ora')
+const Listr = require('listr')
 
 // Ours
 const gest = require('../src/index')
@@ -78,7 +78,7 @@ try {
   }
 
   if (flags.all) {
-    let oneFailed = false
+    let errors = ''
     readDir(process.cwd(), /.*\.(query|graphql|gql)$/i)
       .then(values => {
         console.log(
@@ -88,34 +88,36 @@ try {
         )
         return values
       })
-      .then(values =>
-        Promise.all(
+      .then(values => {
+        return new Listr(
           values.map(v => {
             const paths = v.replace(process.cwd(), '.').split('/')
             // separate file from rest of path
             const fileName = paths.pop()
-            const rep = chalk.dim(paths.concat('').join('/')).concat(fileName)
-            const spinner = ora({ text: rep, color: 'magenta' }).start()
-            return readFile(v)
-              .then(gest(schema, Object.assign(options, { debug: false })))
-              .then(value => {
-                if (value.errors && value.data) spinner.warn()
-                else if (value.errors) {
-                  spinner.fail(`${rep}\n    -  ${value.errors}`)
-                  oneFailed = true
-                } else spinner.succeed()
-                return value
-              })
-              .catch(console.log)
-          })
+            const title = chalk.dim(paths.concat('').join('/')).concat(fileName)
+
+            return {
+              title,
+              task: () =>
+                readFile(v)
+                  .then(gest(schema, Object.assign(options, { debug: false })))
+                  .then(value => {
+                    if (value.errors) {
+                      errors += `${title}\n    -  ${value.errors}`
+                      throw new Error()
+                    }
+                    return value
+                  })
+            }
+          }),
+          { concurrent: true, exitOnError: false }
         )
-      )
+      })
+      .then(tasks => tasks.run())
       .then(() => console.log())
-      .catch(console.log)
-      .then(() => {
-        if (oneFailed) {
-          process.exit(1)
-        }
+      .catch((/* err */) => {
+        console.log('\n' + errors)
+        process.exit(1)
       })
   } else {
     if (flags.print) {
@@ -147,4 +149,5 @@ try {
   }
 } catch (e) {
   console.log(errorMessage(e))
+  process.exit(1)
 }
