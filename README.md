@@ -49,6 +49,8 @@ $ gest test.graphql '{ test }' introspection.graphql
 
 ### REPL
 
+If you run `gest` with no arguments, it will open a REPL for you to run queries in:
+
 ```bash
 $ gest
 
