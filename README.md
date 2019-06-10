@@ -9,6 +9,9 @@
   <a href="https://github.com/mfix22/gest">
     <img src="https://img.shields.io/badge/tested_with-gest-e00098.svg" alt="tested with gest" />
   </a>
+  <a href="https://github.com/mfix22/gest/blob/master/LICENSE">
+    <img src="https://img.shields.io/github/license/dawnlabs/carbon.svg" alt="MIT License" />
+  </a>
 </p>
 
 ## Usage
